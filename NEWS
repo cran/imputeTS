@@ -1,0 +1,8 @@
+
+Changes in Version 0.1
+
+  o Created initial version of imputeTS package for univariate time series imputation
+
+  o added the simple imputation functions: na.locf, na.mean, na.random, na.interpolation, na.replace
+
+  o added na.remove function for removing all NAs from a time series

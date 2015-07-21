@@ -1,0 +1,47 @@
+
+karima
+Loess
+StructTS
+
+Alg
+  --option
+
+loess
+    --approx
+    --spline
+
+unifled
+    --approx
+    --mean
+
+
+kalman
+    --arima
+    --ets??
+
+
+forecast
+     --ets
+     --nnet
+
+macf
+     --macf
+     --macb
+-param: 2 lags
+
+
+knn
+    --relative
+    --absolute
+
+ll
+     -VIM
+     -mice
+      -...
+
+createMissing
+
+createLagsLeads
+
+impute (to call every simple method)
+
