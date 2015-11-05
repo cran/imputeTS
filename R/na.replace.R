@@ -1,5 +1,5 @@
 
-#' @title Missing Value Imputation by Defined Value
+#' @title Replace Missing Values by a Defined Value
 #' 
 #' @description Replaces all missing values with a given value.
 #'  

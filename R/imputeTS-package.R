@@ -1,0 +1,14 @@
+#' imputeTS-package
+#' @description 
+#' The imputeTS package is a collection of algorithms and tools for univariate time series imputation.
+#' 
+#' 
+#' @details The imputeTS package is specialized to univariate time series imputation. It offers quite a
+#' bunch of algorithms for that purpose. Beyond the imputation algorithms the package also includes
+#' functions for simulation of missing data and plotting missing data.
+#' 
+#' 
+#' @name imputeTS-package
+#' @docType package
+#' @import stats
+NULL

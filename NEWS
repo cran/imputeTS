@@ -1,3 +1,20 @@
+Changes in Version 0.3
+
+  o Added two datasets of sensor data
+  
+  o vis.differences for plotting differences between real and imputed values
+
+  
+
+Changes in Version 0.2
+
+  o Removed internal functions from visable package documentation
+
+  o Added additional algorithms: na.seasplit and na.seadec
+  
+  o internal function for algorithm selection
+  
+ 
 
 Changes in Version 0.1
 

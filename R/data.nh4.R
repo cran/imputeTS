@@ -1,0 +1,27 @@
+#' Time series of NH4 concentration in a wastewater system
+#' 
+#' @description Time series of NH4 concentration in a wastewater system. Measured from 30.11.2010 - 16:10 to 01.01.2011 - 6:40 in 10 minute steps.
+#' 
+#' @details The time series is derived from the dataset of the  GECCO Industrial Challenge 2014.
+#' 
+#' In order to use this series for comparing imputation algorithm results,
+#' there are two time series provided. One series without missing values, which can
+#' be used as ground truth. Another series with NAs, on which the imputation 
+#' algorithms can be applied. The NAs thereby were inserted according to patterns
+#' found in similar time series.
+#' 
+#' This are the two time series:
+#' \itemize{
+#'   \item nh4 - The time series with NAs.
+#'
+#'   \item nh4Complete - Time series without NAs.
+#' }
+#' @docType data
+#' @keywords datasets
+#' @name nh4
+#' @aliases nh4Complete
+#' @usage data(nh4)
+#' data(nh4Complete)
+#' @source \url{http://www.spotseven.de/gecco-challenge/gecco-challenge-2014/}
+#' @format Time Series (\code{\link{ts}}) with 4552 rows including 883 NAs.
+NULL
