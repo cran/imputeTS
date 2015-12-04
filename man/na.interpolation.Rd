@@ -4,20 +4,23 @@
 \alias{na.interpolation}
 \title{Missing Value Imputation by Interpolation}
 \usage{
-na.interpolation(data, option = "linear", na.identifier = NA)
+na.interpolation(data, option = "linear", na.identifier = NA, ...)
 }
 \arguments{
 \item{data}{Time Series (\code{\link{ts}}) object in which missing values are to be replaced}
 
 \item{option}{Algorithm to be used. Accepts the following input:
 \itemize{
-   \item{"linear" - for linear interpolation}
-   \item{"spline" - for spline interpolation}
+   \item{"linear" - for linear interpolation using \link{approx} }
+   \item{"spline" - for spline interpolation using \link{spline}}
+   \item{"stine" - for Stineman interpolation using \link{stinterp}}
    }}
 
 \item{na.identifier}{Missing Value Identifier. 
 If another value than NA indicates missing values this can be specified here. 
 Identifier can be a character string as well as a numeric value. No support for lists or vectors.}
+
+\item{...}{Additional parameters to be passed through to \link{approx} or \link{spline}interpolation functions}
 }
 \value{
 Time Series (\code{\link{ts}}) object

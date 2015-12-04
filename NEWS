@@ -1,3 +1,15 @@
+Changes in Version 0.4
+
+  o Update of vis.differences (better looking plot now)
+  
+  o Added vis.missing to visualize the distribution of missing data in a time series
+  
+  o Added vis.barMissing, which is especially suited to visualize missing data in very huge ts
+  
+  o Update na.interpolate (added Stineman interpolation and enabled ... parameter 
+    for all interpolation algortihms to pass through parameters to the underlying functions)
+
+
 Changes in Version 0.3
 
   o Added two datasets of sensor data
@@ -20,6 +32,7 @@ Changes in Version 0.1
 
   o Created initial version of imputeTS package for univariate time series imputation
 
-  o added the simple imputation functions: na.locf, na.mean, na.random, na.interpolation, na.replace
+  o added the simple imputation functions: na.locf, na.mean, na.random, na.interpolation, 
+    na.replace
 
   o added na.remove function for removing all NAs from a time series

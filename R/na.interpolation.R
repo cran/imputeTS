@@ -5,13 +5,14 @@
 #' @param data Time Series (\code{\link{ts}}) object in which missing values are to be replaced
 #' @param option Algorithm to be used. Accepts the following input:
 #' \itemize{
-#'    \item{"linear" - for linear interpolation}
-#'    \item{"spline" - for spline interpolation}
+#'    \item{"linear" - for linear interpolation using \link{approx} }
+#'    \item{"spline" - for spline interpolation using \link{spline}}
+#'    \item{"stine" - for Stineman interpolation using \link{stinterp}}
 #'    }
 #' @param na.identifier Missing Value Identifier. 
 #' If another value than NA indicates missing values this can be specified here. 
 #' Identifier can be a character string as well as a numeric value. No support for lists or vectors.
-#' 
+#' @param ... Additional parameters to be passed through to \link{approx} or \link{spline}interpolation functions
 #' @return Time Series (\code{\link{ts}}) object
 #' 
 #' @details Missing values get replaced by values of a \link{approx} or \link{spline} interpolation.
@@ -34,10 +35,11 @@
 #' na.interpolation(x, option ="spline")
 #' 
 #' @import stats
+#' @import stinepack
 #' @export
 
 
-na.interpolation <- function(data, option = "linear", na.identifier = NA) { 
+na.interpolation <- function(data, option = "linear", na.identifier = NA, ...) { 
  
   #Check for wrong input and change identifier to NA
   data <- precheck(data, na.identifier)
@@ -52,16 +54,22 @@ na.interpolation <- function(data, option = "linear", na.identifier = NA) {
   ## Imputation Code
   ##
   missindx <- is.na(data)  
-  
+
   n <- length(data)
+  
   allindx <- 1:n
   indx <- allindx[!missindx]
   
   if(option =="linear") {
-    interp <- as.ts(approx(indx,data[indx],1:n, rule=2)$y)
+    interp <- as.ts(approx(indx,data[indx],1:n, rule=2, ...)$y)
   }
   else if(option == "spline") {
-    interp <- as.ts(spline(indx,data[indx],n = n )$y)
+    interp <- as.ts(spline(indx,data[indx],n = n, ... )$y)
+  }
+  else if(option == "stine") {
+    interp <- as.ts(stinterp(indx,data[indx],1:n, ...)$y)
+    #avoid trailing NAs
+    if(any(is.na(interp))) {interp <- na.interpolation(interp, option = "linear")}
   }
   else {
     stop("Wrong parameter 'option' given. Value must be either 'linear' or 'spline'.")
