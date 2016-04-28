@@ -3,39 +3,42 @@
 #' 
 #' @description Replaces all missing values with a given value.
 #'  
-#' @param data Time Series (\code{\link{ts}}) object in which missing values are to be replaced
+#' @param x Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced
 #' 
 #' @param fill Value used to replace the missing values
 #' 
-#' @param na.identifier Missing Value Identifier. 
-#' If another value than NA indicates missing values this can be specified here. 
-#' Identifier can be a character string as well as a numeric value.
-#' 
-#' @return Time Series (\code{\link{ts}}) object
+#' @return Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 #' 
 #' @author Steffen Moritz
-#' @seealso \code{\link[imputeTS]{na.mean}}, \code{\link[imputeTS]{na.locf}},
-#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}}
-#' 
+#' @seealso  \code{\link[imputeTS]{na.interpolation}},
+#' \code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
+#'  \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
+#'  \code{\link[imputeTS]{na.random}},
+#'  \code{\link[imputeTS]{na.seadec}}, \code{\link[imputeTS]{na.seasplit}}
+#'  
 #' @examples
-#' #Create Time series with missing values
+#' #Prerequisite: Create Time series with missing values
 #' x <- ts(c(2,3,NA,5,6,NA,7,8))
 #' 
-#' #Replace all NAs with 3.5
+#' #Example 1: Replace all NAs with 3.5
 #' na.replace(x, fill = 3.5 )
+#' 
+#' #Example 2: Replace all NAs with 0
+#' na.replace(x, fill = 0 ) 
 #' 
 #' @import stats
 #' @export
 
 
-na.replace <- function(data, fill = 0, na.identifier = NA) {
+na.replace <- function(x, fill = 0) {
   
-  #Check for wrong input and change identifier to NA
-  data <- precheck(data, na.identifier)
+  data <- x
+  
+  #Check for wrong input 
+  data <- precheck(data)
   
   #if no missing data, do nothing
   if(!anyNA(data)) {
-    warning("No missing data found")
     return(data)
   }
   

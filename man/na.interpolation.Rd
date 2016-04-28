@@ -4,10 +4,10 @@
 \alias{na.interpolation}
 \title{Missing Value Imputation by Interpolation}
 \usage{
-na.interpolation(data, option = "linear", na.identifier = NA, ...)
+na.interpolation(x, option = "linear", ...)
 }
 \arguments{
-\item{data}{Time Series (\code{\link{ts}}) object in which missing values are to be replaced}
+\item{x}{Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced}
 
 \item{option}{Algorithm to be used. Accepts the following input:
 \itemize{
@@ -16,14 +16,10 @@ na.interpolation(data, option = "linear", na.identifier = NA, ...)
    \item{"stine" - for Stineman interpolation using \link{stinterp}}
    }}
 
-\item{na.identifier}{Missing Value Identifier. 
-If another value than NA indicates missing values this can be specified here. 
-Identifier can be a character string as well as a numeric value. No support for lists or vectors.}
-
-\item{...}{Additional parameters to be passed through to \link{approx} or \link{spline}interpolation functions}
+\item{...}{Additional parameters to be passed through to \link{approx} or \link{spline} interpolation functions}
 }
 \value{
-Time Series (\code{\link{ts}}) object
+Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 }
 \description{
 Uses either linear or spline interpolation to replace missing values.
@@ -35,21 +31,26 @@ Missing values get replaced by values of a \link{approx} or \link{spline} interp
  package can be a option.
 }
 \examples{
-#Create Time series with missing values
+#Prerequisite: Create Time series with missing values
 x <- ts(c(2,3,4,5,6,NA,7,8))
 
-#Perform linear interpolation
+#Example 1: Perform linear interpolation
 na.interpolation(x)
 
-#Perform spline interpolation
+#Example 2: Perform spline interpolation
 na.interpolation(x, option ="spline")
+
+#Example 3: Perform stine interpolation
+na.interpolation(x, option ="stine")
 
 }
 \author{
 Steffen Moritz
 }
 \seealso{
-\code{\link[imputeTS]{na.mean}}, \code{\link[imputeTS]{na.locf}},
- \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}}
+\code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
+ \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
+ \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}},
+ \code{\link[imputeTS]{na.seadec}}, \code{\link[imputeTS]{na.seasplit}}
 }
 

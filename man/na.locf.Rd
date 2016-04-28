@@ -2,22 +2,18 @@
 % Please edit documentation in R/na.locf.R
 \name{na.locf}
 \alias{na.locf}
-\title{Missing Value Imputation by LOCF}
+\title{Missing Value Imputation by Last Observation Carried Forward}
 \usage{
-na.locf(data, option = "locf", na.identifier = NA, na.remaining = "keep")
+na.locf(x, option = "locf", na.remaining = "rev")
 }
 \arguments{
-\item{data}{Time Series (\code{\link{ts}}) object in which missing values are to be replaced}
+\item{x}{Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced}
 
 \item{option}{Algorithm to be used. Accepts the following input:
 \itemize{
    \item{"locf" - for Last Observation Carried Forward}
    \item{"nocb" - for Next Obervation Carried Backward}
    }}
-
-\item{na.identifier}{Missing Value Identifier. 
-If another value than NA indicates missing values this can be specified here. 
-Identifier can be a character string as well as a numeric value. No support for lists or vectors.}
 
 \item{na.remaining}{Method to be used for remaining NAs.
 \itemize{
@@ -28,7 +24,7 @@ Identifier can be a character string as well as a numeric value. No support for 
    }}
 }
 \value{
-Time Series (\code{\link{ts}}) object
+Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 }
 \description{
 Replaces each missing value with the most recent present value prior to it
@@ -45,24 +41,27 @@ Replaces each missing value with the most recent present value prior to it
   na.remaining offers some quick solutions to get a series without NAs back.
 }
 \examples{
-#Create Time series with missing values
+#Prerequisite: Create Time series with missing values
 x <- ts(c(NA,3,4,5,6,NA,7,8))
 
-#Perform LOCF
+#Example 1: Perform LOCF
 na.locf(x)
 
-#Perform NOCF
+#Example 2: Perform NOCF
 na.locf(x, option = "nocb")
 
-#Perform LOCF and replace remaining NAs by NOCB
-na.locf(x, na.remaining = "rev")
+#Example 3: Perform LOCF and remove remaining NAs
+na.locf(x, na.remaining = "rm")
 
 }
 \author{
 Steffen Moritz
 }
 \seealso{
-\code{\link[imputeTS]{na.mean}}, \code{\link[imputeTS]{na.locf}},
- \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}}
+\code{\link[imputeTS]{na.interpolation}},
+\code{\link[imputeTS]{na.kalman}},
+ \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
+ \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}},
+ \code{\link[imputeTS]{na.seadec}}, \code{\link[imputeTS]{na.seasplit}}
 }
 

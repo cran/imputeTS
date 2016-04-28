@@ -4,10 +4,10 @@
 \alias{na.mean}
 \title{Missing Value Imputation by Mean Value}
 \usage{
-na.mean(data, option = "mean", na.identifier = NA)
+na.mean(x, option = "mean")
 }
 \arguments{
-\item{data}{Time Series (\code{\link{ts}}) object in which missing values are to be replaced}
+\item{x}{Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced}
 
 \item{option}{Algorithm to be used. Accepts the following input:
 \itemize{
@@ -15,13 +15,9 @@ na.mean(data, option = "mean", na.identifier = NA)
    \item{"median" - take the median for imputation}
    \item{"mode" - take the mode for imputation}
    }}
-
-\item{na.identifier}{Missing Value Identifier. 
-If another value than NA indicates missing values this can be specified here. 
-Identifier can be a character string as well as a numeric value. No support for lists or vectors.}
 }
 \value{
-Time Series (\code{\link{ts}}) object
+Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 }
 \description{
 Missing value replacement by mean values. Different means like median, mean, mode possible.
@@ -33,13 +29,13 @@ most frequent value in the time series. If two or more values occur equally freq
 with the lower value. That's why 'mode' is not the best option for decimal values.
 }
 \examples{
-#Create Time series with missing values
+#Prerequisite: Create Time series with missing values
 x <- ts(c(2,3,4,5,6,NA,7,8))
 
-#Perform imputation with the overall mean
+#Example 1: Perform imputation with the overall mean
 na.mean(x)
 
-#Perform imputation with overall median
+#Example 2: Perform imputation with overall median
 na.mean(x, option ="median")
 
 }
@@ -47,7 +43,10 @@ na.mean(x, option ="median")
 Steffen Moritz
 }
 \seealso{
-\code{\link[imputeTS]{na.mean}}, \code{\link[imputeTS]{na.locf}},
- \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}}
+\code{\link[imputeTS]{na.interpolation}},
+\code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
+ \code{\link[imputeTS]{na.ma}},
+ \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}},
+ \code{\link[imputeTS]{na.seadec}}, \code{\link[imputeTS]{na.seasplit}}
 }
 

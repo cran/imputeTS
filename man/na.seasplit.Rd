@@ -4,10 +4,10 @@
 \alias{na.seasplit}
 \title{Seasonally Splitted Missing Value Imputation}
 \usage{
-na.seasplit(data, algorithm, na.identifier = NA, ...)
+na.seasplit(x, algorithm = "interpolation", ...)
 }
 \arguments{
-\item{data}{Time Series (\code{\link{ts}}) object in which missing values are to be replaced}
+\item{x}{Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced}
 
 \item{algorithm}{Algorithm to be used after splits. Accepts the following input:
 \itemize{
@@ -15,17 +15,15 @@ na.seasplit(data, algorithm, na.identifier = NA, ...)
    \item{"locf" - Imputation by Last Observation Carried Forward}
    \item{"mean" - Imputation by Mean Value}
    \item{"random" - Imputation by Random Sample}
+   \item{"kalman" - Imputation by Kalman Smooting and State Space Models}
+   \item{"ma" - Imputation by Weighted Moving Average}
    }}
-
-\item{na.identifier}{Missing Value Identifier. 
-If another value than NA indicates missing values this can be specified here. 
-Identifier can be a character string as well as a numeric value. No support for lists or vectors.}
 
 \item{...}{Additional parameters for these algorithms that can be passed through. Look at \code{\link[imputeTS]{na.interpolation}}, \code{\link[imputeTS]{na.locf}},
 \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.mean}} for parameter options.}
 }
 \value{
-Time Series (\code{\link{ts}}) object
+Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 }
 \description{
 Splits the times series into seasons and afterwards performs imputation
@@ -33,24 +31,24 @@ seperatly for each of the resulting time series datasets (each containing the da
 for one specific season).
 }
 \examples{
-#Load dataset
-require(datasets)
-data(AirPassengers)
-ap <- AirPassengers
+#Prerequisite: Load a time series with missing values
+x <- tsAirgap
 
-#Insert NAs for testing purposes
-ap[c(3,44,107)] <- NA
+#Example 1: Perform seasonal splitted imputation using algortihm = "interpolation"
+na.seasplit(x, algorithm = "interpolation")
 
-#Perform imputation using na.mean
-na.seasplit(data = ap, algorithm = "interpolation")
-
+#Example 2: Perform seasonal splitted imputation using algortihm = "mean"
+na.seasplit(x, algorithm = "mean")
 
 }
 \author{
 Steffen Moritz
 }
 \seealso{
-\code{\link[imputeTS]{na.interpolation}}, \code{\link[imputeTS]{na.locf}},
- \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.mean}}
+\code{\link[imputeTS]{na.interpolation}},
+\code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
+ \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
+ \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}},
+ \code{\link[imputeTS]{na.seadec}}
 }
 

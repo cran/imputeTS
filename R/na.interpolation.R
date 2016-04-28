@@ -2,18 +2,15 @@
 #' 
 #' @description Uses either linear or spline interpolation to replace missing values.
 #'  
-#' @param data Time Series (\code{\link{ts}}) object in which missing values are to be replaced
+#' @param x Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced
 #' @param option Algorithm to be used. Accepts the following input:
 #' \itemize{
 #'    \item{"linear" - for linear interpolation using \link{approx} }
 #'    \item{"spline" - for spline interpolation using \link{spline}}
 #'    \item{"stine" - for Stineman interpolation using \link{stinterp}}
 #'    }
-#' @param na.identifier Missing Value Identifier. 
-#' If another value than NA indicates missing values this can be specified here. 
-#' Identifier can be a character string as well as a numeric value. No support for lists or vectors.
-#' @param ... Additional parameters to be passed through to \link{approx} or \link{spline}interpolation functions
-#' @return Time Series (\code{\link{ts}}) object
+#' @param ... Additional parameters to be passed through to \link{approx} or \link{spline} interpolation functions
+#' @return Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 #' 
 #' @details Missing values get replaced by values of a \link{approx} or \link{spline} interpolation.
 #'  Both functions are thereby called with their default parameters (except for parameter rule at approx, which is set to 2)
@@ -21,32 +18,38 @@
 #'  package can be a option.
 #' 
 #' @author Steffen Moritz
-#' @seealso \code{\link[imputeTS]{na.mean}}, \code{\link[imputeTS]{na.locf}},
-#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}}
-#' 
+#' @seealso  \code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
+#'  \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
+#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}},
+#'  \code{\link[imputeTS]{na.seadec}}, \code{\link[imputeTS]{na.seasplit}}
+#'  
 #' @examples
-#' #Create Time series with missing values
+#' #Prerequisite: Create Time series with missing values
 #' x <- ts(c(2,3,4,5,6,NA,7,8))
 #' 
-#' #Perform linear interpolation
+#' #Example 1: Perform linear interpolation
 #' na.interpolation(x)
 #' 
-#' #Perform spline interpolation
+#' #Example 2: Perform spline interpolation
 #' na.interpolation(x, option ="spline")
+#' 
+#' #Example 3: Perform stine interpolation
+#' na.interpolation(x, option ="stine")
 #' 
 #' @import stats
 #' @import stinepack
 #' @export
 
 
-na.interpolation <- function(data, option = "linear", na.identifier = NA, ...) { 
+na.interpolation <- function(x, option = "linear", ...) { 
  
-  #Check for wrong input and change identifier to NA
-  data <- precheck(data, na.identifier)
+  data <- x
+  
+  #Check for wrong input 
+  data <- precheck(data)
   
   #if no missing data, do nothing
   if(!anyNA(data)) {
-    warning("No missing data found")
     return(data)
   }
   
@@ -68,8 +71,8 @@ na.interpolation <- function(data, option = "linear", na.identifier = NA, ...) {
   }
   else if(option == "stine") {
     interp <- as.ts(stinterp(indx,data[indx],1:n, ...)$y)
-    #avoid trailing NAs
-    if(any(is.na(interp))) {interp <- na.interpolation(interp, option = "linear")}
+    #avoid NAs at the beginning and end of series // same behavior like for approx with rule = 2.
+    if(any(is.na(interp))) {interp <- na.locf(interp, na.remaining= "rev")}
   }
   else {
     stop("Wrong parameter 'option' given. Value must be either 'linear' or 'spline'.")

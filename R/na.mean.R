@@ -1,18 +1,15 @@
 #' @title Missing Value Imputation by Mean Value
 #' 
 #' @description Missing value replacement by mean values. Different means like median, mean, mode possible.
-#' @param data Time Series (\code{\link{ts}}) object in which missing values are to be replaced
+#' @param x Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced
 #' @param option Algorithm to be used. Accepts the following input:
 #' \itemize{
 #'    \item{"mean" - take the mean for imputation}
 #'    \item{"median" - take the median for imputation}
 #'    \item{"mode" - take the mode for imputation}
 #'    }
-#' @param na.identifier Missing Value Identifier. 
-#' If another value than NA indicates missing values this can be specified here. 
-#' Identifier can be a character string as well as a numeric value. No support for lists or vectors.
-#' 
-#' @return Time Series (\code{\link{ts}}) object
+#'    
+#' @return Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 #' 
 #' @details Missing values get replaced by overall mean values. The function calculates the mean, median or mode
 #' over all the non-NA values and replaces all NAs with this value. Option 'mode' replaces NAs with the 
@@ -21,31 +18,34 @@
 #' 
 #' @author Steffen Moritz
 #' 
-#' @seealso \code{\link[imputeTS]{na.mean}}, \code{\link[imputeTS]{na.locf}},
-#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}}
-#' 
+#' @seealso \code{\link[imputeTS]{na.interpolation}},
+#' \code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
+#'  \code{\link[imputeTS]{na.ma}},
+#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}},
+#'  \code{\link[imputeTS]{na.seadec}}, \code{\link[imputeTS]{na.seasplit}}
+#'  
 #' @examples
-#' #Create Time series with missing values
+#' #Prerequisite: Create Time series with missing values
 #' x <- ts(c(2,3,4,5,6,NA,7,8))
 #' 
-#' #Perform imputation with the overall mean
+#' #Example 1: Perform imputation with the overall mean
 #' na.mean(x)
 #' 
-#' #Perform imputation with overall median
+#' #Example 2: Perform imputation with overall median
 #' na.mean(x, option ="median")
 #' 
 #' @import stats
 #' @export
 
-na.mean <- function(data, option ="mean", na.identifier = NA) {
+na.mean <- function(x, option ="mean") {
   
+  data <- x
   
-  #Check for wrong input and change identifier to NA
-  data <- precheck(data, na.identifier)
+  #Check for wrong input 
+  data <- precheck(data)
   
   #if no missing data, do nothing
   if(!anyNA(data)) {
-    warning("No missing data found")
     return(data)
   }
   

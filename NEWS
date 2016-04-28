@@ -1,3 +1,47 @@
+Changes in Version 1.5
+
+  o Allows now also numeric vectors as input
+
+  o Removed na.identifier parameter for all functions (too error prone, better handled 
+    individually by the user)
+
+  o Minor changes in na.interpolation with option = "stine"
+  
+  o Added na.ma imputation function
+
+  o Replaced "data" in all function parameters with the more common "x"
+
+  o Improvent of all code examples
+
+  o Renamed heating/heatingComplete dataset to tsHeating/tsHeatingComplete
+
+  o Renamed nh4/nh4Complete dataset to tsNH4/tsNH4Complete
+
+  o Added tsAirgap / tsAirgapComplete datasets
+
+  o Improved imputeTS-package documentation
+
+  o Added na.kalman imputation function
+
+  o Added README.md function
+
+  o Added statsNA function
+
+  o Added plotNA.gapsize function
+  
+  o Renamed vis.imputations to plotNA.imputations
+
+  o Renamed vis.barMissing to plotNA.distributionBar
+
+  o Renamed vis.missing to plotNA.distribution
+  
+  o Fixed issues with parameter pass trough and legend for
+    all plotting functions
+    
+  o Improved dataset documentation 
+
+
+
 Changes in Version 0.4
 
   o Update of vis.differences (better looking plot now)

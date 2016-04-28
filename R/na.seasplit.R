@@ -4,59 +4,59 @@
 #' seperatly for each of the resulting time series datasets (each containing the data 
 #' for one specific season).
 #
-#' @param data Time Series (\code{\link{ts}}) object in which missing values are to be replaced
+#' @param x Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced
 #' @param algorithm Algorithm to be used after splits. Accepts the following input:
 #' \itemize{
 #'    \item{"interpolation" - Imputation by Interpolation}
 #'    \item{"locf" - Imputation by Last Observation Carried Forward}
 #'    \item{"mean" - Imputation by Mean Value}
 #'    \item{"random" - Imputation by Random Sample}
+#'    \item{"kalman" - Imputation by Kalman Smooting and State Space Models}
+#'    \item{"ma" - Imputation by Weighted Moving Average}
 #'    }
 #'
-#'@param ... Additional parameters for these algorithms that can be passed through. Look at \code{\link[imputeTS]{na.interpolation}}, \code{\link[imputeTS]{na.locf}},
+#' @param ... Additional parameters for these algorithms that can be passed through. Look at \code{\link[imputeTS]{na.interpolation}}, \code{\link[imputeTS]{na.locf}},
 #'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.mean}} for parameter options.
 #'    
-#' @param na.identifier Missing Value Identifier. 
-#' If another value than NA indicates missing values this can be specified here. 
-#' Identifier can be a character string as well as a numeric value. No support for lists or vectors.
-#' 
-#' @return Time Series (\code{\link{ts}}) object
+#' @return Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 #' 
 #' 
 #' @author Steffen Moritz
-#' @seealso \code{\link[imputeTS]{na.interpolation}}, \code{\link[imputeTS]{na.locf}},
-#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.mean}}
-#' 
+#' @seealso  \code{\link[imputeTS]{na.interpolation}},
+#' \code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
+#'  \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
+#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}},
+#'  \code{\link[imputeTS]{na.seadec}}
+#'  
 #' @examples
-#' #Load dataset
-#' require(datasets)
-#' data(AirPassengers)
-#' ap <- AirPassengers
+#' #Prerequisite: Load a time series with missing values
+#' x <- tsAirgap
 #' 
-#' #Insert NAs for testing purposes
-#' ap[c(3,44,107)] <- NA
+#' #Example 1: Perform seasonal splitted imputation using algortihm = "interpolation"
+#' na.seasplit(x, algorithm = "interpolation")
 #' 
-#' #Perform imputation using na.mean
-#' na.seasplit(data = ap, algorithm = "interpolation")
-#' 
+#' #Example 2: Perform seasonal splitted imputation using algortihm = "mean"
+#' na.seasplit(x, algorithm = "mean")
 #' 
 #' @import stats 
-#' @import datasets
 #' @export
 
 
-na.seasplit <- function(data, algorithm , na.identifier = NA,...) { 
+na.seasplit <- function(x, algorithm="interpolation" , ...) { 
   
-  #Check for wrong input and change identifier to NA
-  data <- precheck(data, na.identifier)
+  data <- x
+  
+  #Check for wrong input 
+  data <- precheck(data)
   
   #if no missing data, do nothing
   if(!anyNA(data)) {
-    warning("No missing data found")
     return(data)
   }
   if(frequency(data)==1) {
-    warning("No seasonality set for dataset found, going on without splitting")
+    warning("No seasonality information for dataset found, going on without decomposition")
+    data <- apply.base.algorithm(data, algorithm = algorithm,...)
+    return(data)
   }
   
   ##

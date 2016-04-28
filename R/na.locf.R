@@ -1,19 +1,16 @@
-#' @title Missing Value Imputation by LOCF
+#' @title Missing Value Imputation by Last Observation Carried Forward
 #' 
 #' @description Replaces each missing value with the most recent present value prior to it
 #'  (Last Observation Carried Forward- LOCF). Optionally this can also be done starting from the back of the series
 #'  (Next Observation Carried Backward - NOCB).
 #'  
-#' @param data Time Series (\code{\link{ts}}) object in which missing values are to be replaced
+#' @param x Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced
 #' @param option Algorithm to be used. Accepts the following input:
 #' \itemize{
 #'    \item{"locf" - for Last Observation Carried Forward}
 #'    \item{"nocb" - for Next Obervation Carried Backward}
 #'    }
-#' @param na.identifier Missing Value Identifier. 
-#' If another value than NA indicates missing values this can be specified here. 
-#' Identifier can be a character string as well as a numeric value. No support for lists or vectors.
-#' 
+#'    
 #' @param na.remaining Method to be used for remaining NAs.
 #' \itemize{
 #'    \item{"keep" - to return the series with NAs}
@@ -21,7 +18,7 @@
 #'    \item{"mean" - to replace remaining NAs by overall mean}
 #'    \item{"rev" - to perform nocb / locf from the reverse direction}
 #'    }
-#' @return Time Series (\code{\link{ts}}) object
+#' @return Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 #' 
 #' @details Replaces each missing value with the most recent present value prior to it
 #'  (Last Observation Carried Forward- LOCF). This can also be done from the reverse direction -starting from the back
@@ -32,34 +29,38 @@
 #'   na.remaining offers some quick solutions to get a series without NAs back.
 #' 
 #' @author Steffen Moritz
-#' @seealso \code{\link[imputeTS]{na.mean}}, \code{\link[imputeTS]{na.locf}},
-#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}}
-#' 
+#' @seealso  \code{\link[imputeTS]{na.interpolation}},
+#' \code{\link[imputeTS]{na.kalman}},
+#'  \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
+#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}},
+#'  \code{\link[imputeTS]{na.seadec}}, \code{\link[imputeTS]{na.seasplit}}
+#'  
 #' @examples
-#' #Create Time series with missing values
+#' #Prerequisite: Create Time series with missing values
 #' x <- ts(c(NA,3,4,5,6,NA,7,8))
 #' 
-#' #Perform LOCF
+#' #Example 1: Perform LOCF
 #' na.locf(x)
 #' 
-#' #Perform NOCF
+#' #Example 2: Perform NOCF
 #' na.locf(x, option = "nocb")
 #' 
-#' #Perform LOCF and replace remaining NAs by NOCB
-#' na.locf(x, na.remaining = "rev")
+#' #Example 3: Perform LOCF and remove remaining NAs
+#' na.locf(x, na.remaining = "rm")
 #' 
 #' @import stats
 #' @export
 
 
-na.locf <- function(data, option ="locf", na.identifier = NA, na.remaining = "keep" ) {
+na.locf <- function(x, option ="locf",  na.remaining = "rev" ) {
   
-  #Check for wrong input and change identifier to NA
-  data <- precheck(data, na.identifier)
+  data <- x
+  
+  #Check for wrong input 
+  data <- precheck(data)
   
   #if no missing data, do nothing
   if(!anyNA(data)) {
-    warning("No missing data found")
     return(data)
   }
   

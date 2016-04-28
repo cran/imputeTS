@@ -1,15 +1,10 @@
-
 #' @title Remove Missing Values
 #' 
 #' @description Removes all missing values from a time series. 
 #'  
-#' @param data Time Series (\code{\link{ts}}) object in which missing values are to be removed
-#'  
-#' @param na.identifier Missing Value Identifier. 
-#' If another value than NA indicates missing values this can be specified here. 
-#' Identifier can be a character string as well as a numeric value.
+#' @param x Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced
 #' 
-#' @return Time Series (\code{\link{ts}}) object
+#' @return Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 #' 
 #' @details Removes all missing values from a time series. This shortens the time series by
 #' the number of missing values in the series. Should be handled with care, because this can affect
@@ -17,35 +12,36 @@
 #' ts object might be no more correct.
 #' 
 #' @author Steffen Moritz
-#' @seealso \code{\link[imputeTS]{na.mean}}, \code{\link[imputeTS]{na.locf}},
-#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}}
-#' 
+#' @seealso  \code{\link[imputeTS]{na.interpolation}},
+#' \code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
+#'  \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
+#'  \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}},
+#'  \code{\link[imputeTS]{na.seadec}}, \code{\link[imputeTS]{na.seasplit}}
+#'  
 #' @examples
+#' #Example 1: Remove all NAs
 #' #Create Time series with missing values
 #' x <- ts(c(2,3,NA,5,6,NA,7,8))
-#' 
 #' #Remove all NAs
 #' na.remove(x)
 #' 
-#' #Create another Time series with missing values (marked with "-")
-#' x2 <- ts(c(2,3,"-",5,6,"-",7,8))
 #' 
-#' #Remove all missing values (identified with "-")
-#' na.remove(x2, na.identifier ="-")
+#' #Example 2: Remove all NAs in tsAirgap
+#' na.remove(tsAirgap)
 #' 
 #' @import stats
 #' @export
 
 
-na.remove <- function(data, na.identifier = NA) {
+na.remove <- function(x) {
   
+  data <- x
   
-  #Check for wrong input and change identifier to NA
-  data <- precheck(data, na.identifier)
+  #Check for wrong input 
+  data <- precheck(data)
   
   #if no missing data, do nothing
   if(!anyNA(data)) {
-    warning("No missing data found")
     return(data)
   }
   

@@ -4,10 +4,10 @@
 \alias{na.seadec}
 \title{Seasonally Decomposed Missing Value Imputation}
 \usage{
-na.seadec(data, algorithm, na.identifier = NA, ...)
+na.seadec(x, algorithm = "interpolation", ...)
 }
 \arguments{
-\item{data}{Time Series (\code{\link{ts}}) object in which missing values are to be replaced}
+\item{x}{Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced}
 
 \item{algorithm}{Algorithm to be used after decomposition. Accepts the following input:
 \itemize{
@@ -15,40 +15,38 @@ na.seadec(data, algorithm, na.identifier = NA, ...)
    \item{"locf" - Imputation by Last Observation Carried Forward}
    \item{"mean" - Imputation by Mean Value}
    \item{"random" - Imputation by Random Sample}
+   \item{"kalman" - Imputation by Kalman Smooting and State Space Models}
+   \item{"ma" - Imputation by Weighted Moving Average}
    }}
-
-\item{na.identifier}{Missing Value Identifier. 
-If another value than NA indicates missing values this can be specified here. 
-Identifier can be a character string as well as a numeric value. No support for lists or vectors.}
 
 \item{...}{Additional parameters for these algorithms that can be passed through. Look at \code{\link[imputeTS]{na.interpolation}}, \code{\link[imputeTS]{na.locf}},
 \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.mean}} for parameter options.}
 }
 \value{
-Time Series (\code{\link{ts}}) object
+Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 }
 \description{
 Removes the seasonal component from the time series, performs imputation on the deseasonalized series and afterwards adds the seasonal component again.
 }
 \examples{
-#Load dataset
-require(datasets)
-data(AirPassengers)
-ap <- AirPassengers
+#Prerequisite: Load a time series with missing values
+x <- tsAirgap
 
-#Insert NAs for testing purposes
-ap[c(3,44,107)] <- NA
+#Example 1: Perform seasonal imputation using algortihm = "interpolation"
+na.seadec(x, algorithm = "interpolation")
 
-#Perform imputation using na.mean
-na.seadec(data = ap, algorithm = "interpolation")
-
+#Example 2: Perform seasonal imputation using algortihm = "mean"
+na.seadec(x, algorithm = "mean")
 
 }
 \author{
 Steffen Moritz
 }
 \seealso{
-\code{\link[imputeTS]{na.interpolation}}, \code{\link[imputeTS]{na.locf}},
- \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.mean}}
+\code{\link[imputeTS]{na.interpolation}},
+\code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
+ \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
+ \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}},
+ \code{\link[imputeTS]{na.seasplit}}
 }
 

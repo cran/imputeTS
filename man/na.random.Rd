@@ -4,22 +4,18 @@
 \alias{na.random}
 \title{Missing Value Imputation by Random Sample}
 \usage{
-na.random(data, lowerBound = min(data, na.rm = T), upperBound = max(data,
-  na.rm = T), na.identifier = NA)
+na.random(x, lowerBound = min(data, na.rm = T), upperBound = max(data, na.rm
+  = T))
 }
 \arguments{
-\item{data}{Time Series (\code{\link{ts}}) object in which missing values are to be removed}
+\item{x}{Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced}
 
 \item{lowerBound}{Lower bound for the random samples (default is min(data) )}
 
 \item{upperBound}{Upper bound for the random samples (default is max(data) )}
-
-\item{na.identifier}{Missing Value Identifier. 
-If another value than NA indicates missing values this can be specified here. 
-Identifier can be a character string as well as a numeric value.}
 }
 \value{
-Time Series (\code{\link{ts}}) object
+Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 }
 \description{
 Replaces each missing value by drawing a random sample between two given bounds.
@@ -30,13 +26,13 @@ default bounds are the minimum and the maximum value in the non-NAs from the tim
 \link{runif} function to get the random values.
 }
 \examples{
-#Create Time series with missing values
+#Prerequisite: Create Time series with missing values
 x <- ts(c(2,3,NA,5,6,NA,7,8))
 
-#Replace all NAs by random values between min and max of the inpute time series
+#Example 1: Replace all NAs by random values between min and max of the inpute time series
 na.random(x)
 
-#Replace all NAs by random values between 1 and 10
+#Example 2: Replace all NAs by random values between 1 and 10
 na.random(x, lowerBound = 1, upperBound = 10)
 
 }
@@ -44,7 +40,10 @@ na.random(x, lowerBound = 1, upperBound = 10)
 Steffen Moritz
 }
 \seealso{
-\code{\link[imputeTS]{na.mean}}, \code{\link[imputeTS]{na.locf}},
- \code{\link[imputeTS]{na.random}}, \code{\link[imputeTS]{na.replace}}
+\code{\link[imputeTS]{na.interpolation}},
+\code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
+ \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
+ \code{\link[imputeTS]{na.replace}},
+ \code{\link[imputeTS]{na.seadec}}, \code{\link[imputeTS]{na.seasplit}}
 }
 

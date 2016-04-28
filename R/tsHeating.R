@@ -1,6 +1,8 @@
-#' Time series of a heating systems supply temperature
+#' @title Time series of a heating systems supply temperature (with NAs)
 #'
 #' @description Time series of a heating systems supply temperature. Measured from 18.11.2013 - 05:12:00 to 13.01.2015 - 15:08:00 in 1 minute steps.
+#' This time series contains missing values. In the package included is also the \code{\link{tsHeatingComplete}} time series providing the true values for the
+#' missing values.
 #' 
 #' @details The time series originates from the GECCO Industrial Challenge 2015.
 #' This Challenge was about "Recovering missing information in heating system operating data".
@@ -13,18 +15,17 @@
 #' algorithms can be applied. The NAs thereby were inserted according to patterns
 #' found in similar time series.
 #' 
-#' This are the two time series:
+#' There are the two time series:
 #' \itemize{
-#'   \item heating - The time series with NAs.
+#'   \item tsHeating - The time series with NAs.
 #'
-#'   \item heatingComplete - Time series without NAs.
+#'   \item tsHeatingComplete - Time series without NAs.
 #' }
 #' @docType data
 #' @keywords datasets
-#' @name heating
-#' @aliases heatingComplete
-#' @usage data(heating)
-#' data(heatingComplete)
+#' @seealso \code{\link[imputeTS]{tsAirgap}}, \code{\link[imputeTS]{tsNH4}}
+#' @name tsHeating
+#' @usage tsHeating
 #' @source \url{http://www.spotseven.de/gecco-challenge/gecco-challenge-2015/}
 #' @format Time Series (\code{\link{ts}}) with 606837 rows including 57391 NAs.
 NULL
