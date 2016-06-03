@@ -1,3 +1,12 @@
+[![Maintenance](https://img.shields.io/badge/maintenance-active-brightgreen.svg)](https://github.com/SteffenMoritz/imputeTS/issues)
+[![Build Status](https://travis-ci.org/SteffenMoritz/imputeTS.svg?branch=master)](https://travis-ci.org/SteffenMoritz/imputeTS)
+[![Coverage Status](https://coveralls.io/repos/github/SteffenMoritz/imputeTS/badge.svg?branch=master)](https://coveralls.io/github/SteffenMoritz/imputeTS?branch=master)
+[![CRAN Version](http://www.r-pkg.org/badges/version/imputeTS)](https://cran.r-project.org/package=imputeTS)
+[![Build](https://img.shields.io/github/license/steffenmoritz/imputeTS.svg
+)](https://github.com/SteffenMoritz/imputeTS/blob/master/LICENSE.txt)
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/imputeTS)](https://cran.r-project.org/package=imputeTS)
+
+
 # imputeTS: Time Series Missing Value Imputation
 
 The imputeTS package specializes on (univariate) time series imputation. 
@@ -64,9 +73,9 @@ Here is a table with available algorithms to choose from:
 |      Function        |           Description                                      | 
 | :--------------------|:-----------------------------------------------------------|
 | na.interpolation     |Missing Value Imputation by Interpolation                   |
-| na.kalman            |Missing Value Imputation by KalmanSmoothing                 |
+| na.kalman            |Missing Value Imputation by Kalman Smoothing                |
 | na.locf              |Missing Value Imputation by Last Observation Carried Forward|
-| na.ma                |Missing Value Imputation by Weighted Moving Average                      |
+| na.ma                |Missing Value Imputation by Weighted Moving Average         |
 | na.mean              |Missing Value Imputation by Mean Value                      | 
 | na.random            |Missing Value Imputation by Random Sample                   | 
 | na.remove            |Remove Missing Values                                       | 
@@ -121,10 +130,10 @@ If you found a bug or have suggestions, feel free to get in contact via steffen.
 > All feedback is welcome
 
 ### Version
-**1.5**
+**1.6**
 
 ### License
-GPL (>= 2)
+GPL-3
 
 
    [CRAN]: <https://cran.r-project.org/package=imputeTS>  

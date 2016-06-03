@@ -1,22 +1,19 @@
 #' @title Missing Value Imputation by Interpolation
 #' 
-#' @description Uses either linear or spline interpolation to replace missing values.
+#' @description Uses either linear, spline or stineman interpolation to replace missing values.
 #'  
 #' @param x Numeric Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object in which missing values shall be replaced
 #' @param option Algorithm to be used. Accepts the following input:
 #' \itemize{
 #'    \item{"linear" - for linear interpolation using \link{approx} }
 #'    \item{"spline" - for spline interpolation using \link{spline}}
-#'    \item{"stine" - for Stineman interpolation using \link{stinterp}}
+#'    \item{"stine" - for Stineman interpolation using \link[stinepack]{stinterp}}
 #'    }
 #' @param ... Additional parameters to be passed through to \link{approx} or \link{spline} interpolation functions
 #' @return Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 #' 
-#' @details Missing values get replaced by values of a \link{approx} or \link{spline} interpolation.
-#'  Both functions are thereby called with their default parameters (except for parameter rule at approx, which is set to 2)
-#'  If more flexibility in parameter settings is needed, na.approx / na.spline from the \pkg{zoo} 
-#'  package can be a option.
-#' 
+#' @details Missing values get replaced by values of a \link{approx}, \link{spline} or \link[stinepack]{stinterp} interpolation.
+#'  
 #' @author Steffen Moritz
 #' @seealso  \code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
 #'  \code{\link[imputeTS]{na.ma}}, \code{\link[imputeTS]{na.mean}},
@@ -36,13 +33,15 @@
 #' #Example 3: Perform stine interpolation
 #' na.interpolation(x, option ="stine")
 #' 
+#' @references Johannesson, Tomas, et al. (2015). "Package stinepack". 
+#' 
 #' @import stats
 #' @import stinepack
 #' @export
 
 
 na.interpolation <- function(x, option = "linear", ...) { 
- 
+  
   data <- x
   
   #Check for wrong input 
@@ -57,7 +56,7 @@ na.interpolation <- function(x, option = "linear", ...) {
   ## Imputation Code
   ##
   missindx <- is.na(data)  
-
+  
   n <- length(data)
   
   allindx <- 1:n

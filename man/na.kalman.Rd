@@ -70,6 +70,9 @@ na.kalman(x,model = usermodel)
 \author{
 Steffen Moritz
 }
+\references{
+Hyndman RJ and Khandakar Y (2008). "Automatic time series forecasting: the forecast package for R". Journal of Statistical Software, 26(3).
+}
 \seealso{
 \code{\link[imputeTS]{na.interpolation}},
  \code{\link[imputeTS]{na.locf}},

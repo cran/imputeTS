@@ -25,9 +25,11 @@
 #' @param ylab Label for y axis of plot
 #' @param ... Additional graphical parameters that can be passed through to barplot 
 #' 
-#' @details This function visualizes the distribution of missing values within a time series. Therefore
-#' the time series is plotted and whenever a value is NA the background is colored differently.
-#' This gives a nice overview, where in the time series most of the missing values occur.
+#' @details This function visualizes the distribution of missing values within a time series.
+#' In comparison to the \code{\link[imputeTS]{plotNA.distribution}} function this is not done by plotting
+#' each observation of the time series seperately. Instead observations for time intervals are represented as bars.
+#' For these intervals information about the amount of missing values are shown. This has the advantage, that also
+#' for large time series a plot which is easy to overview can be created.
 #'
 #' @author Steffen Moritz
 #' 

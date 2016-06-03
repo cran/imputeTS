@@ -31,15 +31,12 @@ plotNA.distribution(x, colPoints = "steelblue",
 \item{...}{Additional graphical parameters that can be passed through to plot}
 }
 \description{
-Visualize the distribution of missing values within a time series. This is done
-as a barplot, which is especially useful if the time series would otherwise be too large to be plotted.
+Visualize the distribution of missing values within a time series.
 }
 \details{
-This function visualizes the distribution of missing values within a time series.
-In comparison to the \code{\link[imputeTS]{plotNA.distribution}} function this is not done by plotting
-each observation of the time series seperatly. Instead observations for time intervals are represented as bars.
-For these intervals information about the amount of missing values are shown. This has the advantage, that also
-for large time series a plot which is easy to overview can be created.
+This function visualizes the distribution of missing values within a time series. Therefore
+the time series is plotted and whenever a value is NA the background is colored differently.
+This gives a nice overview, where in the time series most of the missing values occur.
 }
 \examples{
 #Prerequisite: Load a time series with missing values

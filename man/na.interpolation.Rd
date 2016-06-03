@@ -13,7 +13,7 @@ na.interpolation(x, option = "linear", ...)
 \itemize{
    \item{"linear" - for linear interpolation using \link{approx} }
    \item{"spline" - for spline interpolation using \link{spline}}
-   \item{"stine" - for Stineman interpolation using \link{stinterp}}
+   \item{"stine" - for Stineman interpolation using \link[stinepack]{stinterp}}
    }}
 
 \item{...}{Additional parameters to be passed through to \link{approx} or \link{spline} interpolation functions}
@@ -22,13 +22,10 @@ na.interpolation(x, option = "linear", ...)
 Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}}) object (dependent on given input at parameter x)
 }
 \description{
-Uses either linear or spline interpolation to replace missing values.
+Uses either linear, spline or stineman interpolation to replace missing values.
 }
 \details{
-Missing values get replaced by values of a \link{approx} or \link{spline} interpolation.
- Both functions are thereby called with their default parameters (except for parameter rule at approx, which is set to 2)
- If more flexibility in parameter settings is needed, na.approx / na.spline from the \pkg{zoo} 
- package can be a option.
+Missing values get replaced by values of a \link{approx}, \link{spline} or \link[stinepack]{stinterp} interpolation.
 }
 \examples{
 #Prerequisite: Create Time series with missing values
@@ -46,6 +43,9 @@ na.interpolation(x, option ="stine")
 }
 \author{
 Steffen Moritz
+}
+\references{
+Johannesson, Tomas, et al. (2015). "Package stinepack".
 }
 \seealso{
 \code{\link[imputeTS]{na.kalman}}, \code{\link[imputeTS]{na.locf}},
