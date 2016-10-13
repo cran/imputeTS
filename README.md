@@ -1,8 +1,9 @@
 [![Maintenance](https://img.shields.io/badge/maintenance-active-brightgreen.svg)](https://github.com/SteffenMoritz/imputeTS/issues)
 [![Build Status](https://travis-ci.org/SteffenMoritz/imputeTS.svg?branch=master)](https://travis-ci.org/SteffenMoritz/imputeTS)
-[![Coverage Status](https://coveralls.io/repos/github/SteffenMoritz/imputeTS/badge.svg?branch=master)](https://coveralls.io/github/SteffenMoritz/imputeTS?branch=master)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffenmoritz/imputeTS?branch=master&svg=true)](https://ci.appveyor.com/project/steffenmoritz/imputeTS)
+[![codecov](https://codecov.io/gh/SteffenMoritz/imputeTS/branch/master/graph/badge.svg)](https://codecov.io/gh/SteffenMoritz/imputeTS)
 [![CRAN Version](http://www.r-pkg.org/badges/version/imputeTS)](https://cran.r-project.org/package=imputeTS)
-[![Build](https://img.shields.io/github/license/steffenmoritz/imputeTS.svg
+[![License](https://img.shields.io/badge/License-GPL--3-blue.svg
 )](https://github.com/SteffenMoritz/imputeTS/blob/master/LICENSE.txt)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/imputeTS)](https://cran.r-project.org/package=imputeTS)
 
@@ -130,7 +131,7 @@ If you found a bug or have suggestions, feel free to get in contact via steffen.
 > All feedback is welcome
 
 ### Version
-**1.6**
+**1.7**
 
 ### License
 GPL-3
