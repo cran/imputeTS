@@ -72,7 +72,7 @@ na.kalman <- function(x, model = "StructTS" , smooth =TRUE,nit=-1, ...) {
   
   # Multivariate Input Handling (loop through all columns)
   # No imputation code in this part. 
-  if (!is.null( dim(data)[2]) && dim(data)[2] != 1  ) {
+  if (!is.null( dim(data)[2]) ) {
     for (i in 1:dim(data)[2]) {
       #if imputing a column does not work (mostly because it is not numeric) the column is left unchanged
       tryCatch(data[,i] <- na.kalman(data[ ,i], model, smooth, nit, ...), error=function(cond) {
@@ -114,11 +114,11 @@ na.kalman <- function(x, model = "StructTS" , smooth =TRUE,nit=-1, ...) {
     ##Selection of state space model
     
     #State space representation of a arima model 
-    if (model =="auto.arima") {
+    if (model[1] =="auto.arima") {
       mod <- auto.arima(data,...)$model
     }
     #State space model, default is BSM - basic structural model
-    else if(model == "StructTS") {
+    else if(model[1] == "StructTS") {
       #Fallback, because for StructTS first value is not allowed to be NA
       if(is.na(data[1])) {data[1] <- na.locf(data,option = "nocb",na.remaining = "rev")[1]}
       mod <- StructTS(data,...)$model0
@@ -163,11 +163,8 @@ na.kalman <- function(x, model = "StructTS" , smooth =TRUE,nit=-1, ...) {
     karima <-rowSums(erg)
     
     #Add imputations to the initial dataset
-    for (i in 1:length(data)) {
-      if (is.na(data[i])) {
-        data[i] <- karima[i]
-      }
-    }
+    data[missindx] <- karima[missindx]
+
     return(data)
   }
 }
