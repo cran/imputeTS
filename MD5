@@ -1,6 +1,6 @@
-bda51bbeeb6c01015a7f03979febcf44 *DESCRIPTION
+9f5af0e0856ecf0d96abdb03e81cddc5 *DESCRIPTION
 6a9079530b963773acc9a29c173534f7 *NAMESPACE
-5e9846573e0557e288cee95197a71943 *NEWS
+de430acd2923f91ae5e2dc055905f49d *NEWS
 abfa978a1c34de8674c5264739383fb8 *R/RcppExports.R
 f9627a5614ea9e95328a5b5828662ebe *R/imputeTS-package.R
 9f92903fa8fdcb2149848b5b90004377 *R/int.algoInterface.R
@@ -25,7 +25,7 @@ bb641a94042d981296f634a9dea4066f *R/plotNA.gapsize.R
 2faf9928e4230d429933c6b795032752 *R/tsHeatingComplete.R
 90953081492773458b2238dae12fbd34 *R/tsNH4.R
 0986033ab84a0d92a1d7b5285d809338 *R/tsNH4Complete.R
-d52c40ed4726bc9c7a40f09ca3999038 *README.md
+3fedf2a74c7ea575ce6deca24b4f5334 *README.md
 fe7f15a2c19557e0f74d06bf400429bb *build/vignette.rds
 376f036d4326ffea410fbcc48adfa597 *data/tsAirgap.rda
 7d407bccb2af2aef9361a1a246fa9281 *data/tsAirgapComplete.rda
@@ -34,8 +34,8 @@ fe7f15a2c19557e0f74d06bf400429bb *build/vignette.rds
 6c3780d65b858bfc0d2adf3af2d54083 *data/tsNH4.rda
 14cfa983aaac6d5f043048e003270a5b *data/tsNH4Complete.rda
 943519d776bdf3965931fae0b802554f *inst/CITATION
-b997fb52a99e3ae9d7aa3fb6f776d4ed *inst/doc/Introduction.Rnw
-4f0f3040cfa3d34ce71fe65df9cdeb82 *inst/doc/Introduction.pdf
+3404d714907b6856c075bc3346152628 *inst/doc/Introduction.Rnw
+ad779a37d45412c215c4181e3d502664 *inst/doc/Introduction.pdf
 b247465bc8ddfba70d3b1965452b7267 *man/imputeTS-package.Rd
 fe102270fca81a57c0f9de59ebf7f46b *man/na.interpolation.Rd
 91127f369691f3293ffbdcac5a5ef02a *man/na.kalman.Rd
@@ -66,7 +66,7 @@ a3be10a552c94c1729cc5aa909613661 *src/register.c
 edec84012b2393cc3d1c87bcb8a98b7c *tests/testthat/test-int.algoInterface.R
 1747a97f719baada4bcea68b9c0a8052 *tests/testthat/test-int.preCheck.R
 9e74fd35c141e3a3150af7824ca7d42c *tests/testthat/test-na.interpolation.R
-322da1ea7302d0a5a38e5b2f8949b2d3 *tests/testthat/test-na.kalman.R
+6a791209518657dfccaf33008b60304b *tests/testthat/test-na.kalman.R
 9c26a0d8a10956e88b8db20c9b7f4cfe *tests/testthat/test-na.locf.R
 224777c8bc333f2a62396274f3226a69 *tests/testthat/test-na.ma.R
 f736d6df378af99439955c526b8f6cb0 *tests/testthat/test-na.mean.R
@@ -89,5 +89,5 @@ d1dc986f0c95a5030ccc33996954dcdf *vignettes/Figures.d/imputations2.pdf
 3c3738b82d8f47669970f4ce95a62e94 *vignettes/Figures.d/sponsorlogo.jpg
 c089ca45b62aa1c118e73e3358bd566e *vignettes/Figures.d/statsna.png
 fe9a986703cef0e954bb4c3b644e2d6a *vignettes/Figures.d/tsairgap.png
-b997fb52a99e3ae9d7aa3fb6f776d4ed *vignettes/Introduction.Rnw
+3404d714907b6856c075bc3346152628 *vignettes/Introduction.Rnw
 11f9080ed8834f58518e6ec4cba5f421 *vignettes/RJournal.sty
