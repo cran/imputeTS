@@ -1,12 +1,12 @@
-9f5af0e0856ecf0d96abdb03e81cddc5 *DESCRIPTION
+3a6b2a69e2d58347c03450a958208d0d *DESCRIPTION
 6a9079530b963773acc9a29c173534f7 *NAMESPACE
-de430acd2923f91ae5e2dc055905f49d *NEWS
+4c1949d0b6d88939d08e383019595904 *NEWS
 abfa978a1c34de8674c5264739383fb8 *R/RcppExports.R
 f9627a5614ea9e95328a5b5828662ebe *R/imputeTS-package.R
 9f92903fa8fdcb2149848b5b90004377 *R/int.algoInterface.R
 23b9d68e934bc04aab1a4f7c9a7140f5 *R/na.interpolation.R
 5849b0ca6e52a57baad0797d3d933878 *R/na.kalman.R
-5b4fb78382a26ba79347afa7d1a1e00b *R/na.locf.R
+2b7725de53fa5fa0ac37742d03222a1c *R/na.locf.R
 0b66797d401ce92e7f8ed0ae3ae17142 *R/na.ma.R
 95ed458c6be0ae76638e9643f7047efd *R/na.mean.R
 cfb2a3b3a5ec047119509562cf2e17c7 *R/na.random.R
@@ -35,7 +35,7 @@ fe7f15a2c19557e0f74d06bf400429bb *build/vignette.rds
 14cfa983aaac6d5f043048e003270a5b *data/tsNH4Complete.rda
 943519d776bdf3965931fae0b802554f *inst/CITATION
 3404d714907b6856c075bc3346152628 *inst/doc/Introduction.Rnw
-ad779a37d45412c215c4181e3d502664 *inst/doc/Introduction.pdf
+68fb236873ed21c68fab82cec0846bd1 *inst/doc/Introduction.pdf
 b247465bc8ddfba70d3b1965452b7267 *man/imputeTS-package.Rd
 fe102270fca81a57c0f9de59ebf7f46b *man/na.interpolation.Rd
 91127f369691f3293ffbdcac5a5ef02a *man/na.kalman.Rd
@@ -59,7 +59,7 @@ ea3176bbc93f86fd2b5fcee418d06c68 *man/tsAirgapComplete.Rd
 5ba6736443aaf2a1faaea0e7c07bde40 *man/tsNH4.Rd
 4bef9025f52e3f6788140a203ea1d242 *man/tsNH4Complete.Rd
 b8e96b231015242bb621ab76f2a8fd3f *src/RcppExports.cpp
-1bacebbce8a54f1f923063c7ceecf30b *src/locf.cpp
+d45a24c67ed50ee6db7917fc9368e578 *src/locf.cpp
 a3be10a552c94c1729cc5aa909613661 *src/register.c
 8d0e75fc6fad100e1e7509c7e749b43c *tests/testthat.R
 2098f76e8b149e2f4097242ccb964bc6 *tests/testthat/test-advanced-tsObjects.R
