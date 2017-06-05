@@ -49,6 +49,9 @@ na.interpolation <- function(x, option = "linear", ...) {
   # No imputation code in this part. 
   if (!is.null( dim(data)[2]) && dim(data)[2] > 1 ) {
     for (i in 1:dim(data)[2]) {
+      
+      if (!anyNA(data[,i])) {next}
+      
       #if imputing a column does not work (mostly because it is not numeric) the column is left unchanged
       tryCatch(data[,i] <- na.interpolation(data[ ,i], option), error=function(cond) {
         warning(paste("imputeTS: No imputation performed for column",i,"because of this",cond), call. = FALSE)
@@ -65,9 +68,16 @@ na.interpolation <- function(x, option = "linear", ...) {
     ## Input check
     ## 
     
-    #if no missing data, do nothing
+    missindx <- is.na(data)
+    
+    #Nothing to impute in the data
     if(!anyNA(data)) {
       return(data)
+    }
+    
+    #Minimum amount of non-NA values
+    if (sum(!missindx) < 2) {
+      stop("Input data needs at least 2 non-NA data point for applying na.interpolation")
     }
 
     if(!is.null(dim(data)[2])&&!dim(data)[2]==1)
@@ -87,8 +97,6 @@ na.interpolation <- function(x, option = "linear", ...) {
     ##
     ## Imputation Code
     ##
-    
-    missindx <- is.na(data)  
     
     n <- length(data)
     

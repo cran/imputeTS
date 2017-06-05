@@ -47,6 +47,9 @@ na.seasplit <- function(x, algorithm="interpolation" , ...) {
   # No imputation code in this part. 
   if (!is.null( dim(data)[2]) && dim(data)[2] > 1 ) {
     for (i in 1:dim(data)[2]) {
+      
+      if (!anyNA(data[,i])) {next}
+      
       #if imputing a column does not work (mostly because it is not numeric) the column is left unchanged
       tryCatch(data[,i] <- na.seasplit(data[ ,i], algorithm, ...), error=function(cond) {
         warning(paste("imputeTS: No imputation performed for column",i,"because of this",cond), call. = FALSE)
@@ -63,8 +66,17 @@ na.seasplit <- function(x, algorithm="interpolation" , ...) {
     ## Input check
     ## 
     
+    
+    missindx <- is.na(data)
+    
+    #Nothing to impute in the data
     if(!anyNA(data)) {
       return(data)
+    }
+    
+    #Input completly NA
+    if (all(missindx)) {
+      stop("Input data has only NAs")
     }
     
     if(!is.null(dim(data)[2])&&!dim(data)[2]==1)

@@ -69,6 +69,9 @@ na.ma <- function(x, k =4, weighting = "exponential") {
   # No imputation code in this part. 
   if (!is.null( dim(data)[2]) && dim(data)[2] > 1 ) {
     for (i in 1:dim(data)[2]) {
+      
+      if (!anyNA(data[,i])) {next}
+      
       #if imputing a column does not work (mostly because it is not numeric) the column is left unchanged
       tryCatch(data[,i] <- na.ma(data[ ,i], k, weighting), error=function(cond) {
         warning(paste("imputeTS: No imputation performed for column",i,"because of this",cond), call. = FALSE)
@@ -85,8 +88,16 @@ na.ma <- function(x, k =4, weighting = "exponential") {
     ## Input check
     ## 
     
+    missindx <- is.na(data)
+    
+    #Nothing to impute in the data
     if(!anyNA(data)) {
       return(data)
+    }
+    
+    #Minimum amount of non-NA values
+    if (sum(!missindx) < 2) {
+      stop("Input data needs at least 2 non-NA data point for applying na.ma")
     }
     
     #Stop for wrong k values

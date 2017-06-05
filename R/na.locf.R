@@ -59,6 +59,9 @@ na.locf <- function(x, option ="locf",  na.remaining = "rev" ) {
   # No imputation code in this part. 
   if (!is.null( dim(data)[2]) && dim(data)[2] > 1 ) {
     for (i in 1:dim(data)[2]) {
+      
+      if (!anyNA(data[,i])) {next}
+      
       #if imputing a column does not work (mostly because it is not numeric) the column is left unchanged
       tryCatch(data[,i] <- na.locf(data[ ,i], option, na.remaining), error=function(cond) {
         warning(paste("imputeTS: No imputation performed for column",i,"because of this",cond), call. = FALSE)
@@ -75,8 +78,16 @@ na.locf <- function(x, option ="locf",  na.remaining = "rev" ) {
     ## Input check
     ## 
     
+    missindx <- is.na(data)
+    
+    #Nothing to impute in the data
     if(!anyNA(data)) {
       return(data)
+    }
+    
+    #Input completly NA
+    if (all(missindx)) {
+      stop("Input data has only NAs. Input data needs at least 1 non-NA data point for applying na.locf")
     }
     
     if(!is.null(dim(data)[2])&&!dim(data)[2]==1)
@@ -97,8 +108,6 @@ na.locf <- function(x, option ="locf",  na.remaining = "rev" ) {
     ## Imputation Code
     ##
     
-    missindx <- is.na(data)  
-
     #Input as vector
     data.vec <- as.vector(data)
     

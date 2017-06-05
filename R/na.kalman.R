@@ -74,6 +74,9 @@ na.kalman <- function(x, model = "StructTS" , smooth =TRUE,nit=-1, ...) {
   # No imputation code in this part. 
   if (!is.null( dim(data)[2]) && dim(data)[2] > 1 ) {
     for (i in 1:dim(data)[2]) {
+      
+      if (!anyNA(data[,i])) {next}
+      
       #if imputing a column does not work (mostly because it is not numeric) the column is left unchanged
       tryCatch(data[,i] <- na.kalman(data[ ,i], model, smooth, nit, ...), error=function(cond) {
         warning(paste("imputeTS: No imputation performed for column",i,"because of this",cond), call. = FALSE)
@@ -90,8 +93,16 @@ na.kalman <- function(x, model = "StructTS" , smooth =TRUE,nit=-1, ...) {
     ## Input check
     ## 
     
+    missindx <- is.na(data)
+    
+    #Nothing to impute in the data
     if(!anyNA(data)) {
       return(data)
+    }
+    
+    #Minimum amount of non-NA values
+    if (sum(!missindx) < 3) {
+      stop("Input data needs at least 3 non-NA data point for applying na.kalman")
     }
     
     if(!is.logical(smooth)) {
@@ -118,7 +129,6 @@ na.kalman <- function(x, model = "StructTS" , smooth =TRUE,nit=-1, ...) {
     ## Imputation Code
     ##
     
-    missindx <- is.na(data)
     
     ##Selection of state space model
     
@@ -165,14 +175,10 @@ na.kalman <- function(x, model = "StructTS" , smooth =TRUE,nit=-1, ...) {
     #Out of all components in $states or$smooth only the ones
     #which have 1 or -1 in $Z are in the model
     #Therefore matrix multiplication is done
-    for ( i in 1:length(mod$Z)) {
-      erg[,i] = erg[,i] * mod$Z[i]
-    }
-    #Add remaining values in the rows
-    karima <-rowSums(erg)
-    
+    karima <- erg[missindx, ,drop=FALSE] %*% as.matrix(mod$Z)
+
     #Add imputations to the initial dataset
-    data[missindx] <- karima[missindx]
+    data[missindx] <- karima
 
     ## End Imputation Code
     

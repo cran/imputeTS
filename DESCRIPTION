@@ -1,9 +1,16 @@
 Package: imputeTS
-Version: 2.3
-Date: 2017-05-20
+Version: 2.4
+Date: 2017-06-04
 Title: Time Series Missing Value Imputation
-Description: Imputation (replacement) of missing values in univariate time
-    series.
+Description: Imputation (replacement) of missing values 
+             in univariate time series. 
+             Offers several imputation functions
+             and missing data plots. 
+             Available imputation algorithms include: 
+            'Mean', 'LOCF', 'Interpolation', 
+            'Moving Average', 'Seasonal Decomposition', 
+            'Kalman Smoothing on Structural Time Series models',
+            'Kalman Smoothing on ARIMA models'.
 Author: Steffen Moritz
 Maintainer: Steffen Moritz <steffen.moritz10@gmail.com>
 LazyData: yes
@@ -20,5 +27,5 @@ VignetteBuilder: utils
 RoxygenNote: 6.0.1
 LinkingTo: Rcpp
 NeedsCompilation: yes
-Packaged: 2017-05-21 01:24:14 UTC; Steve
-Date/Publication: 2017-05-21 07:36:48 UTC
+Packaged: 2017-06-05 00:21:58 UTC; Steve
+Date/Publication: 2017-06-05 17:50:38 UTC
