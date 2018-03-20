@@ -1,6 +1,6 @@
 Package: imputeTS
-Version: 2.5
-Date: 2017-06-12
+Version: 2.6
+Date: 2018-03-20
 Title: Time Series Missing Value Imputation
 Description: Imputation (replacement) of missing values 
              in univariate time series. 
@@ -27,5 +27,5 @@ VignetteBuilder: utils
 RoxygenNote: 6.0.1
 LinkingTo: Rcpp
 NeedsCompilation: yes
-Packaged: 2017-06-12 02:21:59 UTC; Steve
-Date/Publication: 2017-06-13 07:16:48 UTC
+Packaged: 2018-03-20 12:34:11 UTC; Steve
+Date/Publication: 2018-03-20 18:08:55 UTC

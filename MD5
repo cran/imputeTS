@@ -1,6 +1,6 @@
-b328392920c8634c5bc0d4ccc55f7f3e *DESCRIPTION
+fe755b70ae02e8a3c14ad61107d57e61 *DESCRIPTION
 6a9079530b963773acc9a29c173534f7 *NAMESPACE
-ed2e5108154b60a2d3baa44a91af1b0c *NEWS
+30cc1da18e1eba2a37e647d8a7672b81 *NEWS
 abfa978a1c34de8674c5264739383fb8 *R/RcppExports.R
 f9627a5614ea9e95328a5b5828662ebe *R/imputeTS-package.R
 9f92903fa8fdcb2149848b5b90004377 *R/int.algoInterface.R
@@ -25,7 +25,7 @@ bb641a94042d981296f634a9dea4066f *R/plotNA.gapsize.R
 2faf9928e4230d429933c6b795032752 *R/tsHeatingComplete.R
 90953081492773458b2238dae12fbd34 *R/tsNH4.R
 0986033ab84a0d92a1d7b5285d809338 *R/tsNH4Complete.R
-f7d5e4561f82b2dbd9641b6cb3e550a2 *README.md
+59395fdf6f0018dbb5fc8fb0738f9774 *README.md
 9494750dee7348df6812810d3ad64e47 *build/vignette.rds
 376f036d4326ffea410fbcc48adfa597 *data/tsAirgap.rda
 7d407bccb2af2aef9361a1a246fa9281 *data/tsAirgapComplete.rda
@@ -33,9 +33,9 @@ f7d5e4561f82b2dbd9641b6cb3e550a2 *README.md
 3679ce37fa57a0fbe2eafccfb1e2c77b *data/tsHeatingComplete.rda
 6c3780d65b858bfc0d2adf3af2d54083 *data/tsNH4.rda
 14cfa983aaac6d5f043048e003270a5b *data/tsNH4Complete.rda
-943519d776bdf3965931fae0b802554f *inst/CITATION
+6d53bd05716a88e96e3424870babaa7d *inst/CITATION
 bd85ad39234929df7eca2cac2bcac11e *inst/doc/imputeTS-Time-Series-Missing-Value-Imputation-in-R.Rnw
-c3f45a406322552b8cf962aa75267e1b *inst/doc/imputeTS-Time-Series-Missing-Value-Imputation-in-R.pdf
+52a7918f88334a6f876d1ede82312f9b *inst/doc/imputeTS-Time-Series-Missing-Value-Imputation-in-R.pdf
 b247465bc8ddfba70d3b1965452b7267 *man/imputeTS-package.Rd
 fe102270fca81a57c0f9de59ebf7f46b *man/na.interpolation.Rd
 91127f369691f3293ffbdcac5a5ef02a *man/na.kalman.Rd
@@ -74,7 +74,7 @@ c9fe68bd145451e9daf7e06d69567d32 *tests/testthat/test-na.mean.R
 84f257c9ddfc655219b8871c953a9933 *tests/testthat/test-na.remove.R
 6d3cb0eeabadfc2666f557fb716f8d75 *tests/testthat/test-na.replace.R
 d104c84224a136d998baefd847faf6e1 *tests/testthat/test-na.seadec.R
-175dfc3e2f9670ebb35a02c5bab3c496 *tests/testthat/test-na.seasplit.R
+344ccd091791ae9c2d042e5e6ccb21df *tests/testthat/test-na.seasplit.R
 4c63671863fdb8390dd679c37a32c9b4 *tests/testthat/test-plotNA.distribution.R
 0222a6432c49f82f2c8ff49b4514429e *tests/testthat/test-plotNA.distributionBar.R
 73fc34450d9f88ef681d5535e16234a7 *tests/testthat/test-plotNA.gapsize.R
@@ -91,7 +91,3 @@ c089ca45b62aa1c118e73e3358bd566e *vignettes/Figures.d/statsna.png
 fe9a986703cef0e954bb4c3b644e2d6a *vignettes/Figures.d/tsairgap.png
 11f9080ed8834f58518e6ec4cba5f421 *vignettes/RJournal.sty
 bd85ad39234929df7eca2cac2bcac11e *vignettes/imputeTS-Time-Series-Missing-Value-Imputation-in-R.Rnw
-636308456f60d2b31cbf97867db5708d *vignettes/placeins.sty
-ef9b32a1ae21527915dd94aa8be3d815 *vignettes/titleps.sty
-afa86533e532701faf233f3f592c61e0 *vignettes/titlesec.sty
-6f2961ec45ee4ad03439efe5de257c61 *vignettes/titletoc.sty
