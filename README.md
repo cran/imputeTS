@@ -1,11 +1,11 @@
-[![Project Status: Active The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Project Status: Active The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Build Status](https://travis-ci.org/SteffenMoritz/imputeTS.svg?branch=master)](https://travis-ci.org/SteffenMoritz/imputeTS)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffenmoritz/imputeTS?branch=master&svg=true)](https://ci.appveyor.com/project/steffenmoritz/imputeTS)
 [![codecov](https://codecov.io/gh/SteffenMoritz/imputeTS/branch/master/graph/badge.svg)](https://codecov.io/gh/SteffenMoritz/imputeTS)
-[![CRAN Version](http://www.r-pkg.org/badges/version/imputeTS)](https://cran.r-project.org/package=imputeTS)
-[![CRAN Release](http://www.r-pkg.org/badges/last-release/imputeTS
+[![CRAN Version](https://www.r-pkg.org/badges/version/imputeTS)](https://cran.r-project.org/package=imputeTS)
+[![CRAN Release](https://www.r-pkg.org/badges/last-release/imputeTS
 )](https://cran.r-project.org/package=imputeTS)
-[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/imputeTS)](https://cran.r-project.org/package=imputeTS)
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/imputeTS)](https://cran.r-project.org/package=imputeTS)
 
 
 # imputeTS: Time Series Missing Value Imputation
@@ -95,7 +95,7 @@ Here is a table with available algorithms to choose from:
   > than just one algorithm. For example na.interpolation can be set to linear
   > or spline interpolation.
 
-More detailed information about the algortihms and their options can be found in the [imputeTS reference manual].
+More detailed information about the algorithms and their options can be found in the [imputeTS reference manual].
 
 ### Missing Data Plots
 
@@ -131,14 +131,21 @@ There are two datasets (each in two versions) available:
   > conducting experiments of imputation functions.
  
   More detailed information about the datasets can be found in the [imputeTS reference manual].
-  
+
+### Reference
+You can cite imputeTS the following: 
+
+  > Moritz, Steffen, and Thomas Bartz-Beielstein. "imputeTS: Time Series Missing Value Imputation in R." R Journal 9.1 (2017).
+ 
+
+
 ### Support
 If you found a bug or have suggestions, feel free to get in contact via steffen.moritz10 at gmail.com
 
 > All feedback is welcome
 
 ### Version
-**2.6**
+**2.7**
 
 ### License
 GPL-3
@@ -146,4 +153,6 @@ GPL-3
 
    [CRAN]: <https://cran.r-project.org/package=imputeTS>  
    [imputeTS reference manual]: <https://cran.r-project.org/package=imputeTS>
+   [Citation]: <https://cran.r-project.org/web/packages/imputeTS/citation.html>
+
  

@@ -26,6 +26,10 @@
 #' #Example 2: Replace all NAs with 0
 #' na.replace(x, fill = 0 ) 
 #' 
+#' #Example 3: Same as example 1, just written with pipe operator
+#' x %>% na.replace(fill = 3.5 )
+#' 
+#' @importFrom magrittr %>%
 #' @import stats
 #' @export
 

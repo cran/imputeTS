@@ -60,9 +60,13 @@
 #' usermodel <- arima(tsAirgap,order = c(1,0,1))$model
 #' na.kalman(tsAirgap,model = usermodel)
 #' 
+#' #Example 6: Same as example 1, just written with pipe operator
+#' tsAirgap %>% na.kalman
+#' 
 #' @references Hyndman RJ and Khandakar Y (2008). "Automatic time series forecasting: the forecast package for R". Journal of Statistical Software, 26(3).
 #' @import stats 
 #' @import forecast
+#' @importFrom magrittr %>%
 #' @export
 
 na.kalman <- function(x, model = "StructTS" , smooth =TRUE,nit=-1, ...) { 
