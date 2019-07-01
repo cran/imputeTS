@@ -1,3 +1,60 @@
+## Changes in Version 3.0
+
+Thanks to Jim Maas, shreydesai, Breza, CameronNemo for reporting bugs
+Thanks to for Sebastian Gatscha providing the (way faster) C++ na.ma() implementation
+
+ * tibble and tstibble compatibility
+ 
+ * Reworked internal code documentation
+
+ * na.ma speed up via C++ 
+
+ * Changed vignette builder to R.rsp
+
+ * Used R package styler package to optimize source code readability
+ 
+ * Made some changes to better follow tidyverse style guide
+ 
+ * Replaced na. with na_ e.g na.mean with na_mean usw.This fits better to modern code
+   style guidelines. The old function names will still work for a while,
+   but give a warning.
+
+ * Added findFrequency option to na.seadec and na.seasplit
+
+ * Added maxgap option
+ 
+ * Fixed bug for na.seadec - also imputed known values in some special cases
+   (reported by CameronNemo)
+
+ * Added doi: 10.32614/RJ-2017-009 to describtion, references, readme and citation file
+
+ * Added StackExchange link to Readme
+
+ * Moved stinepack from imports to suggested
+ 
+ * Internal reorganization of imports - now always using pkg::function and importFrom pkg x1 x2 x3instead of just import pkg
+
+* Fixed bug in na.ma when using xts time series with NA at the end
+
+* Fixed error message in na.interpolation if wrong parameter is given       
+   stop("Wrong parameter 'option' given. Value must be either 'linear', 'spline' or 'stine'.")
+   (reported by Breza)
+
+* Fixed spelling mistakes in na.seadec and na.seasplit (reported by shreydesai)
+
+* Fixed bug with na.random() output (reported by Jim Maas)
+
+## Outlook - Planned for Version 3.1
+
+ * Better plots using ggplot2
+ 
+ * Better and more unit tests 
+ 
+ * Additional vignettes
+ 
+ * Adding harmonic and geometric mean as option for na_mean
+
+
 ## Changes in Version 2.7
 
   * Updated Description: Orcid Id added, packages required for unit test add as "Suggested"

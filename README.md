@@ -1,3 +1,4 @@
+
 [![Project Status: Active The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Build Status](https://travis-ci.org/SteffenMoritz/imputeTS.svg?branch=master)](https://travis-ci.org/SteffenMoritz/imputeTS)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/steffenmoritz/imputeTS?branch=master&svg=true)](https://ci.appveyor.com/project/steffenmoritz/imputeTS)
@@ -8,7 +9,7 @@
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/imputeTS)](https://cran.r-project.org/package=imputeTS)
 
 
-# imputeTS: Time Series Missing Value Imputation
+# imputeTS: Time Series Missing Value Imputation <img src="man/figures/imputeTS-logo.png" align="right" width="565" height="382" alt="imputeTS Logo" />
 
 The imputeTS package specializes on (univariate) time series imputation. 
 It offers several different imputation algorithm implementations. Beyond the imputation algorithms the package also provides plotting and printing functions of time series missing data statistics. Additionally three time series datasets for imputation experiments are included.
@@ -34,7 +35,7 @@ install_github("SteffenMoritz/imputeTS")
   To impute (fill all missing values) in a time series ***x***, run the following
   command:
   ```
-   na.interpolation(x)
+   na_interpolation(x)
   ```
   Output is the time series ***x*** with all NA's replaced by reasonable values.
 
@@ -43,7 +44,7 @@ install_github("SteffenMoritz/imputeTS")
   > calculating the NA replacements. There are several other 
   > algorithms (see also under caption "Imputation Algorithms"). All 
   > imputation functions   are named alike starting with
-  > na. followed by a algorithm label  e.g. na.mean, na.kalman, ...
+  > na_ followed by a algorithm label  e.g. na_mean, na_kalman, ...
 
 
 - ###### Plotting
@@ -80,19 +81,19 @@ Here is a table with available algorithms to choose from:
 
 |      Function        |           Description                                      | 
 | :--------------------|:-----------------------------------------------------------|
-| na.interpolation     |Missing Value Imputation by Interpolation                   |
-| na.kalman            |Missing Value Imputation by Kalman Smoothing                |
-| na.locf              |Missing Value Imputation by Last Observation Carried Forward|
-| na.ma                |Missing Value Imputation by Weighted Moving Average         |
-| na.mean              |Missing Value Imputation by Mean Value                      | 
-| na.random            |Missing Value Imputation by Random Sample                   | 
-| na.remove            |Remove Missing Values                                       | 
-| na.replace           |Replace Missing Values by a Defined Value                   | 
-| na.seadec            |Seasonally Decomposed Missing Value Imputation              | 
-| na.seasplit          |Seasonally Splitted Missing Value Imputation                | 
+| na_interpolation     |Missing Value Imputation by Interpolation                   |
+| na_kalman            |Missing Value Imputation by Kalman Smoothing                |
+| na_locf              |Missing Value Imputation by Last Observation Carried Forward|
+| na_ma                |Missing Value Imputation by Weighted Moving Average         |
+| na_mean              |Missing Value Imputation by Mean Value                      | 
+| na_random            |Missing Value Imputation by Random Sample                   | 
+| na_remove            |Remove Missing Values                                       | 
+| na_replace           |Replace Missing Values by a Defined Value                   | 
+| na_seadec            |Seasonally Decomposed Missing Value Imputation              | 
+| na_seasplit          |Seasonally Splitted Missing Value Imputation                | 
 
   > This is a rather broad overview. The functions itself mostly offer more
-  > than just one algorithm. For example na.interpolation can be set to linear
+  > than just one algorithm. For example na_interpolation can be set to linear
   > or spline interpolation.
 
 More detailed information about the algorithms and their options can be found in the [imputeTS reference manual].
@@ -135,17 +136,23 @@ There are two datasets (each in two versions) available:
 ### Reference
 You can cite imputeTS the following: 
 
-  > Moritz, Steffen, and Thomas Bartz-Beielstein. "imputeTS: Time Series Missing Value Imputation in R." R Journal 9.1 (2017).
+  > Moritz, Steffen, and Thomas Bartz-Beielstein. "imputeTS: Time Series Missing Value Imputation in R." R Journal 9.1 (2017). doi: 10.32614/RJ-2017-009.
  
 
+### Need Help?
+If you have general programming problems or need help using the package please ask your question on [StackOverflow]. By doing so all users will be able to benefit in the future from your question.
+
+> Don't forget to mark your question with the [imputets] tag on StackOverflow to get me notified
 
 ### Support
-If you found a bug or have suggestions, feel free to get in contact via steffen.moritz10 at gmail.com
+If you found a bug or have suggestions, feel free to get in contact via steffen.moritz10 at gmail.com.
 
 > All feedback is welcome
 
+
+
 ### Version
-**2.7**
+**3.0**
 
 ### License
 GPL-3
@@ -154,5 +161,6 @@ GPL-3
    [CRAN]: <https://cran.r-project.org/package=imputeTS>  
    [imputeTS reference manual]: <https://cran.r-project.org/package=imputeTS>
    [Citation]: <https://cran.r-project.org/web/packages/imputeTS/citation.html>
-
+   [StackOverflow]: <https://stackoverflow.com/tags/imputets/info> 
+   [imputets]: <https://stackoverflow.com/questions/tagged/imputets>
  
