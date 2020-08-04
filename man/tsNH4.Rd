@@ -4,7 +4,9 @@
 \name{tsNH4}
 \alias{tsNH4}
 \title{Time series of NH4 concentration in a wastewater system (with NAs)}
-\format{Time Series (\code{\link{ts}}) with 4552 rows including 883 NAs.}
+\format{
+Time Series (\code{\link{ts}}) with 4552 rows including 883 NAs.
+}
 \source{
 \url{http://www.spotseven.de/gecco-challenge/gecco-challenge-2014/}
 }
@@ -21,15 +23,15 @@ The time series is derived from the dataset of the  GECCO Industrial Challenge 2
 
 In order to use this series for comparing imputation algorithm results,
 there are two time series provided. One series without missing values, which can
-be used as ground truth. Another series with NAs, on which the imputation 
+be used as ground truth. Another series with NAs, on which the imputation
 algorithms can be applied. The NAs thereby were inserted according to patterns
 found in similar time series.
 
 There are the two time series:
 \itemize{
-  \item tsNH4 - The time series with NAs.
+\item tsNH4 - The time series with NAs.
 
-  \item tsNH4Complete - Time series without NAs.
+\item tsNH4Complete - Time series without NAs.
 }
 }
 \seealso{

@@ -52,8 +52,13 @@ install_github("SteffenMoritz/imputeTS")
   To plot missing data statistics for a time series ***x***, run the following
   command:
   ```
-   plotNA.distribution(x)
+   ggplot_na_distribution(x)
   ```
+  <p align="center">
+  <img src="man/figures/ggplot_na_distribution.png" width="600" height="350" alt="Example ggplot_na_distribution plot" />
+ </p>
+  
+  
   > This is also just one example for a plot. Overall there are four different types 
   > of missing data plots. (see also under caption "Missing Data Plots"). 
 
@@ -102,18 +107,18 @@ More detailed information about the algorithms and their options can be found in
 
 Here is a table with available plots to choose from:
 
-|      Function           |           Description                                 | 
-| :-----------------------|:------------------------------------------------------|
-| plotNA.distribution     |Visualize Distribution of Missing Values               |
-| plotNA.distributionBar  |Visualize Distribution of Missing Values (Barplot)     |
-| plotNA.gapsize          |Visualize Distribution of NA gapsizes                  |
-| plotNA.imputations      |Visualize Imputed Values                               | 
+|      Function           |           Description                                        | 
+| :-----------------------|:-------------------------------------------------------------|
+| ggplot_na_distribution  |Visualize Distribution of Missing Values                      |
+| ggplot_na_intervals     |Missing Values Summarized in Intervals                        |
+| ggplot_na_gapsize       |Visualize Distribution of NA Gapsizes                         |
+| ggplot_na_imputations   |Visualize Imputed Values                                      | 
 
 More detailed information about the plots can be found in the [imputeTS reference manual].
 
 ### Datasets
 
-There are two datasets (each in two versions) available:
+There are three datasets (each in two versions) available:
 
 |      Dataset     |             Description                                          | 
 | :----------------|:-----------------------------------------------------------------|
@@ -136,7 +141,7 @@ There are two datasets (each in two versions) available:
 ### Reference
 You can cite imputeTS the following: 
 
-  > Moritz, Steffen, and Thomas Bartz-Beielstein. "imputeTS: Time Series Missing Value Imputation in R." R Journal 9.1 (2017). doi: 10.32614/RJ-2017-009.
+  > Moritz, Steffen, and Bartz-Beielstein, Thomas. "imputeTS: Time Series Missing Value Imputation in R." R Journal 9.1 (2017). doi: 10.32614/RJ-2017-009.
  
 
 ### Need Help?
@@ -152,7 +157,7 @@ If you found a bug or have suggestions, feel free to get in contact via steffen.
 
 
 ### Version
-**3.0**
+**3.1**
 
 ### License
 GPL-3
