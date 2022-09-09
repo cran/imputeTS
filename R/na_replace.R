@@ -17,7 +17,7 @@
 #' object (dependent on given input at parameter x)
 #'
 #' @author Steffen Moritz
-#' 
+#'
 #' @seealso  \code{\link[imputeTS]{na_interpolation}},
 #' \code{\link[imputeTS]{na_kalman}}, \code{\link[imputeTS]{na_locf}},
 #'  \code{\link[imputeTS]{na_ma}}, \code{\link[imputeTS]{na_mean}},
@@ -27,23 +27,24 @@
 #' @examples
 #' # Prerequisite: Create Time series with missing values
 #' x <- ts(c(2, 3, NA, 5, 6, NA, 7, 8))
-#' 
+#'
 #' # Example 1: Replace all NAs with 3.5
 #' na_replace(x, fill = 3.5)
-#' 
+#'
 #' # Example 2: Replace all NAs with 0
 #' na_replace(x, fill = 0)
-#' 
+#'
 #' # Example 3: Same as example 1, just written with pipe operator
 #' x %>% na_replace(fill = 3.5)
-#' 
 #' @importFrom stats ts
 #' @importFrom magrittr %>%
 #' @export
 
 na_replace <- function(x, fill = 0, maxgap = Inf) {
-  data <- x
 
+  # Variable 'data' is used for all transformations to the time series
+  # 'x' needs to stay unchanged to be able to return the same ts class in the end
+  data <- x
 
 
   #----------------------------------------------------------
@@ -59,9 +60,15 @@ na_replace <- function(x, fill = 0, maxgap = Inf) {
         next
       }
       # if imputing a column does not work - mostly because it is not numeric - the column is left unchanged
-      tryCatch(data[, i] <- na_replace(data[, i], fill, maxgap), error = function(cond) {
-        warning(paste("imputeTS: No imputation performed for column", i, "because of this", cond), call. = FALSE)
-      })
+      tryCatch(
+        data[, i] <- na_replace(data[, i], fill, maxgap),
+        error = function(cond) {
+          warning(paste(
+            "na_replace: No imputation performed for column", i, "of the input dataset.
+                Reason:", cond[1]
+          ), call. = FALSE)
+        }
+      )
     }
     return(data)
   }
@@ -81,7 +88,7 @@ na_replace <- function(x, fill = 0, maxgap = Inf) {
 
     # 1.1 Check if NAs are present
     if (!anyNA(data)) {
-      return(data)
+      return(x)
     }
 
     # 1.2 special handling data types
@@ -90,14 +97,14 @@ na_replace <- function(x, fill = 0, maxgap = Inf) {
     }
 
     # 1.3 Check for algorithm specific minimum amount of non-NA values
-    # Not needed for na_replace, it works with all NA vectors
+    # Not needed for na_replace, it works with all-NA vectors
 
-    
+
     # 1.4 Checks and corrections for wrong data dimension
 
     # Check if input dimensionality is not as expected
     if (!is.null(dim(data)[2]) && !dim(data)[2] == 1) {
-      stop("Wrong input type for parameter x")
+      stop("Wrong input type for parameter x.")
     }
 
     # Altering multivariate objects with 1 column (which are essentially
@@ -107,10 +114,10 @@ na_replace <- function(x, fill = 0, maxgap = Inf) {
     }
 
     # 1.5 Check if input is numeric
-    
+
     # Combined with check if all NA present, since an all NA vector returns FALSE for is.numeric
     if (!is.numeric(data) & !all(is.na(data))) {
-      stop("Input x is not numeric")
+      stop("Input x is not numeric.")
     }
 
     ##

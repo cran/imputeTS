@@ -6,18 +6,9 @@
 \alias{imputeTS-package}
 \title{imputeTS: Time Series Missing Value Imputation}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Imputation (replacement) of missing values 
-             in univariate time series. 
-             Offers several imputation functions
-             and missing data plots. 
-             Available imputation algorithms include: 
-            'Mean', 'LOCF', 'Interpolation', 
-            'Moving Average', 'Seasonal Decomposition', 
-            'Kalman Smoothing on Structural Time Series models',
-            'Kalman Smoothing on ARIMA models'. Published in Moritz and Bartz-Beielstein (2017) 
-            <doi: 10.32614/RJ-2017-009>.
+Imputation (replacement) of missing values in univariate time series. Offers several imputation functions and missing data plots. Available imputation algorithms include: 'Mean', 'LOCF', 'Interpolation', 'Moving Average', 'Seasonal Decomposition', 'Kalman Smoothing on Structural Time Series models', 'Kalman Smoothing on ARIMA models'. Published in Moritz and Bartz-Beielstein (2017) \doi{10.32614/RJ-2017-009}.
 
 The imputeTS package is a collection of algorithms and tools for univariate time series imputation.
 }
@@ -40,7 +31,7 @@ Every other imputation function (starting with na_'algorithm name') and plotting
 function (starting with plotNA_'plot name') work the same way as in this example.
 }
 \references{
-Moritz, Steffen, and Thomas Bartz-Beielstein. "imputeTS: Time Series Missing Value Imputation in R." R Journal 9.1 (2017). doi: 10.32614/RJ-2017-009.
+Moritz, Steffen, and Thomas Bartz-Beielstein. "imputeTS: Time Series Missing Value Imputation in R." R Journal 9.1 (2017). doi:10.32614/RJ-2017-009.
 }
 \seealso{
 Useful links:
@@ -62,6 +53,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Earo Wang \email{earo.wang@gmail.com} (\href{https://orcid.org/0000-0001-6448-5260}{ORCID}) [contributor]
+  \item Ron Hause \email{ronaldhause@gmail.com} (\href{https://orcid.org/0000-0002-5229-7366}{ORCID}) [contributor]
 }
 
 }

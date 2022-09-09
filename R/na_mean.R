@@ -25,11 +25,14 @@
 #' object (dependent on given input at parameter x)
 #'
 #' @details Missing values get replaced by overall mean values. The function
-#' calculates the mean, median or mode over all the non-NA values and replaces
-#' all NAs with this value. Option 'mode' replaces NAs with the most frequent
-#' value in the time series. If two or more values occur equally frequent, the
-#' function imputes with the lower value. That's why 'mode' is not the best
-#' option for decimal values.
+#' calculates the mean, median, mode, harmonic or geometric mean over all the non-NA
+#' values and replaces all NAs with this value. Option 'mode' replaces NAs with
+#' the most frequent value in the time series. If two or more values occur equally frequent,
+#' the function imputes the lower value. Due to their calculation formula geometric and harmonic
+#' mean are not well defined for negative values or zero values in the input series.
+#'
+#' In general using the mean for imputation imputation is mostly a suboptimal choice and should
+#' be handled with great caution.
 #'
 #' @author Steffen Moritz
 #'
@@ -56,8 +59,10 @@
 #' @export
 #'
 na_mean <- function(x, option = "mean", maxgap = Inf) {
-  data <- x
 
+  # Variable 'data' is used for all transformations to the time series
+  # 'x' needs to stay unchanged to be able to return the same ts class in the end
+  data <- x
 
 
   #----------------------------------------------------------
@@ -73,9 +78,15 @@ na_mean <- function(x, option = "mean", maxgap = Inf) {
         next
       }
       # if imputing a column does not work - mostly because it is not numeric - the column is left unchanged
-      tryCatch(data[, i] <- na_mean(data[, i], option, maxgap), error = function(cond) {
-        warning(paste("imputeTS: No imputation performed for column", i, "because of this", cond), call. = FALSE)
-      })
+      tryCatch(
+        data[, i] <- na_mean(data[, i], option, maxgap),
+        error = function(cond) {
+          warning(paste(
+            "na_mean: No imputation performed for column", i, "of the input dataset.
+                Reason:", cond[1]
+          ), call. = FALSE)
+        }
+      )
     }
     return(data)
   }
@@ -96,7 +107,7 @@ na_mean <- function(x, option = "mean", maxgap = Inf) {
 
     # 1.1 Check if NAs are present
     if (!anyNA(data)) {
-      return(data)
+      return(x)
     }
 
     # 1.2 special handling data types
@@ -106,14 +117,14 @@ na_mean <- function(x, option = "mean", maxgap = Inf) {
 
     # 1.3 Check for algorithm specific minimum amount of non-NA values
     if (all(missindx)) {
-      stop("Input data has only NAs. Input data needs at least 1 non-NA data point for applying na_mean")
+      stop("Input data has only NA values. At least 1 non-NA data point required in the time series to apply na_mean.")
     }
 
     # 1.4 Checks and corrections for wrong data dimension
 
     # Check if input dimensionality is not as expected
     if (!is.null(dim(data)[2]) && !dim(data)[2] == 1) {
-      stop("Wrong input type for parameter x")
+      stop("Wrong input type for parameter x.")
     }
 
     # Altering multivariate objects with 1 column (which are essentially
@@ -124,7 +135,7 @@ na_mean <- function(x, option = "mean", maxgap = Inf) {
 
     # 1.5 Check if input is numeric
     if (!is.numeric(data)) {
-      stop("Input x is not numeric")
+      stop("Input x is not numeric.")
     }
 
     ##
@@ -149,12 +160,14 @@ na_mean <- function(x, option = "mean", maxgap = Inf) {
       data[missindx] <- mode
     }
     else if (option == "mean") {
-      # Use arithmeic Mean
+      # Use arithmetic Mean
       mean <- mean(data, na.rm = TRUE)
       data[missindx] <- mean
     }
     else if (option == "geometric") {
       # Use geometric Mean
+
+      # Check preconditions
       if (any(data == 0 | data < 0, na.rm = T)) {
         stop(
           "The input data contains 0 and/or negative values.\n",
@@ -167,6 +180,8 @@ na_mean <- function(x, option = "mean", maxgap = Inf) {
     }
     else if (option == "harmonic") {
       # Use harmonic Mean
+
+      # Check preconditions
       if (any(data == 0 | data < 0, na.rm = T)) {
         stop(
           "The input data contains 0 and/or negative values.\n",
@@ -178,7 +193,7 @@ na_mean <- function(x, option = "mean", maxgap = Inf) {
       data[missindx] <- mean
     }
     else {
-      stop("Wrong 'option' parameter given, must be either: \n'mean', 'mode', 'median', 'harmonic' or 'geometric'")
+      stop("Wrong 'option' parameter given, must be either: \n'mean', 'mode', 'median', 'harmonic' or 'geometric'.")
     }
 
     ##

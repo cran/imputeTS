@@ -11,6 +11,8 @@ ggplot_na_gapsize(
   ranked_by = "occurrence",
   color_occurrence = "indianred",
   color_total = "steelblue",
+  color_border = "black",
+  alpha_bars = 1,
   title = "Occurrence of gap sizes",
   subtitle = "Gap sizes (NAs in a row) ordered by most common",
   xlab = NULL,
@@ -57,6 +59,10 @@ The default setting is "occurrence".}
 \item{color_total}{Defines the color for the bars of
 'total resulting NAs'.}
 
+\item{color_border}{Defines the color for the border of the bars.}
+
+\item{alpha_bars}{Alpha (transparency) value used for filling the bars.}
+
 \item{title}{Title of the Plot.}
 
 \item{subtitle}{Subtitle of the Plot.}
@@ -94,7 +100,7 @@ This plotting function can be used to visualize the length of
 the NA gaps (NAs in a row) in a time series. It shows a ranking of which
 gap sizes occur most often. This ranking can be ordered by the number
 occurrence of the gap sizes or by total resulting NAs for this gap size
-(occurrence * gap length). A NA-gap of 3 occuring 10 times means 30 total
+(occurrence * gap length). A NA-gap of 3 occurring 10 times means 30 total
 resulting NAs.
 
 A resulting plot can for example be described like this:
@@ -106,11 +112,11 @@ The only really needed parameter for this function is x (the univariate
 time series with NAs that shall be visualized). All other parameters
 are solely for altering the appearance of the plot.
 
-As long as the input is univariate and numeric the function also takes
+As long as the input is univariate and numeric, the function also takes
 data.frame, tibble, tsibble, zoo, xts as an input.
 
 The plot can be adjusted to your needs via the function parameters.
-Additionally for more complex adjustments, the output can also be
+Additionally, for more complex adjustments, the output can also be
 adjusted via ggplot2 syntax. This is possible, since the output
 of the function is a ggplot2 object. Also take a look at the Examples
 to see how adjustments are made.
@@ -157,7 +163,7 @@ ggplot_na_gapsize(tsNH4, color_total = "grey") +
 }
 \seealso{
 \code{\link[imputeTS]{ggplot_na_distribution}},
-\code{\link[imputeTS]{ggplot_na_intervals}},
+\code{\link[imputeTS]{ggplot_na_distribution2}},
 \code{\link[imputeTS]{ggplot_na_imputations}}
 }
 \author{

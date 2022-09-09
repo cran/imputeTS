@@ -71,11 +71,11 @@ test_that("Imputation works for data.frame", {
 
 
 
-test_that("Error for wrong input for option parameter", {
+test_that("Warning for wrong input for option parameter", {
   expect_error(na_locf(tsAirgap, option = "wrongOption"))
 })
 
-test_that("Error for wrong input for na_remaining parameter", {
+test_that("Warning for wrong input for na_remaining parameter", {
   x <- tsAirgap
   x[1:2] <- NA
   expect_error(na_locf(x, na_remaining = "Wrong"))

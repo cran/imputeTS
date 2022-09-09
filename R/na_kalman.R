@@ -10,11 +10,13 @@
 #' (on which KalmanSmooth is performed) can be chosen. Accepts the following input:
 #'
 #' \itemize{
-#'    \item{"auto.arima" - For using the state space representation of
-#'    arima model (using \link[forecast]{auto.arima})} (default choice)
 #'
 #'    \item{"StructTS" - For using a structural model fitted by maximum
-#'     likelihood (using \link[stats]{StructTS}) }
+#'     likelihood (using \link[stats]{StructTS}) } (default choice)
+#'
+#'    \item{"auto.arima" - For using the state space representation of
+#'    arima model (using \link[forecast]{auto.arima})}
+#'
 #'    }
 #'
 #'  For both auto.arima and StructTS additional parameters for model building can
@@ -73,23 +75,22 @@
 #' @examples
 #' # Example 1: Perform imputation with KalmanSmoother and state space representation of arima model
 #' na_kalman(tsAirgap)
-#' 
+#'
 #' # Example 2: Perform imputation with KalmanRun and state space representation of arima model
 #' na_kalman(tsAirgap, smooth = FALSE)
-#' 
+#'
 #' # Example 3: Perform imputation with KalmanSmooth and StructTS model
 #' na_kalman(tsAirgap, model = "StructTS", smooth = TRUE)
-#' 
+#'
 #' # Example 4: Perform imputation with KalmanSmooth and StructTS model with additional parameters
 #' na_kalman(tsAirgap, model = "StructTS", smooth = TRUE, type = "trend")
-#' 
+#'
 #' # Example 5:  Perform imputation with KalmanSmooth and user created model
 #' usermodel <- arima(tsAirgap, order = c(1, 0, 1))$model
 #' na_kalman(tsAirgap, model = usermodel)
-#' 
+#'
 #' # Example 6: Same as example 1, just written with pipe operator
 #' tsAirgap %>% na_kalman()
-#' 
 #' @references Hyndman RJ and Khandakar Y (2008). "Automatic time series forecasting: the forecast package for R". Journal of Statistical Software, 26(3).
 #' @importFrom stats StructTS KalmanSmooth KalmanRun arima
 #' @importFrom forecast auto.arima
@@ -97,6 +98,9 @@
 #' @export
 
 na_kalman <- function(x, model = "StructTS", smooth = TRUE, nit = -1, maxgap = Inf, ...) {
+
+  # Variable 'data' is used for all transformations to the time series
+  # 'x' needs to stay unchanged to be able to return the same ts class in the end
   data <- x
 
 
@@ -113,9 +117,15 @@ na_kalman <- function(x, model = "StructTS", smooth = TRUE, nit = -1, maxgap = I
         next
       }
       # if imputing a column does not work - mostly because it is not numeric - the column is left unchanged
-      tryCatch(data[, i] <- na_kalman(data[, i], model, smooth, nit, maxgap,...), error = function(cond) {
-        warning(paste("imputeTS: No imputation performed for column", i, "because of this", cond), call. = FALSE)
-      })
+      tryCatch(
+        data[, i] <- na_kalman(data[, i], model, smooth, nit, maxgap, ...),
+        error = function(cond) {
+          warning(paste(
+            "na_kalman: No imputation performed for column", i, "of the input dataset.
+                Reason:", cond[1]
+          ), call. = FALSE)
+        }
+      )
     }
     return(data)
   }
@@ -136,7 +146,7 @@ na_kalman <- function(x, model = "StructTS", smooth = TRUE, nit = -1, maxgap = I
 
     # 1.1 Check if NAs are present
     if (!anyNA(data)) {
-      return(data)
+      return(x)
     }
 
     # 1.2 special handling data types
@@ -146,7 +156,7 @@ na_kalman <- function(x, model = "StructTS", smooth = TRUE, nit = -1, maxgap = I
 
     # 1.3 Check for algorithm specific minimum amount of non-NA values
     if (sum(!missindx) < 3) {
-      stop("Input data needs at least 3 non-NA data point for applying na_kalman")
+      stop("At least 3 non-NA data points required in the time series to apply na_kalman.")
     }
 
 
@@ -154,7 +164,7 @@ na_kalman <- function(x, model = "StructTS", smooth = TRUE, nit = -1, maxgap = I
 
     # Check if input dimensionality is not as expected
     if (!is.null(dim(data)[2]) && !dim(data)[2] == 1) {
-      stop("Wrong input type for parameter x")
+      stop("Wrong input type for parameter x.")
     }
 
     # Altering multivariate objects with 1 column (which are essentially
@@ -165,16 +175,25 @@ na_kalman <- function(x, model = "StructTS", smooth = TRUE, nit = -1, maxgap = I
 
     # 1.5 Check if input is numeric
     if (!is.numeric(data)) {
-      stop("Input x is not numeric")
+      stop("Input x is not numeric.")
     }
 
     # 1.6 Check if type of parameter smooth is correct
     if (!is.logical(smooth)) {
-      stop("Parameter smooth must be of type logical ( TRUE / FALSE)")
+      stop("Parameter smooth must be of type logical ( TRUE / FALSE).")
     }
 
     # 1.7 Transformation to numeric as 'int' can't be given to KalmanRun
     data[1:length(data)] <- as.numeric(data)
+
+
+    # 1.8 Check for and mitigate all constant values in combination with StructTS
+    # See https://github.com/SteffenMoritz/imputeTS/issues/26
+
+    if (is.character(model) && model == "StructTS" && length(unique(as.vector(data))) == 2) {
+      return(na_interpolation(x))
+    }
+
 
     ##
     ## End Input Check and Transformation
@@ -193,9 +212,9 @@ na_kalman <- function(x, model = "StructTS", smooth = TRUE, nit = -1, maxgap = I
     }
     # State space model, default is BSM - basic structural model
     else if (model[1] == "StructTS") {
-      # Fallback, because for StructTS first value is not allowed to be NA
+      # Fallback, in StructTS first value is not allowed to be NA, thus take first non-NA
       if (is.na(data[1])) {
-        data[1] <- na_locf(data, option = "nocb", na_remaining = "rev")[1]
+        data[1] <- data[which.min(is.na(data))]
       }
       mod <- stats::StructTS(data, ...)$model0
     }
@@ -204,13 +223,13 @@ na_kalman <- function(x, model = "StructTS", smooth = TRUE, nit = -1, maxgap = I
       mod <- model
       if (length(mod) < 7) {
         stop("Parameter model has either to be \"StructTS\"/\"auto.arima\" or a user supplied model in
-            form of a list with at least components T, Z, h , V, a, P, Pn specified")
+            form of a list with at least components T, Z, h , V, a, P, Pn specified.")
       }
 
       if (is.null(mod$Z)) {
         stop("Something is wrong with the user supplied model. Either choose \"auto.arima\" or \"StructTS\"
              or supply a state space model with at least components T, Z, h , V, a, P, Pn as specified
-             under Details on help page for KalmanLike")
+             under Details on help page for KalmanLike.")
       }
     }
 
@@ -228,7 +247,7 @@ na_kalman <- function(x, model = "StructTS", smooth = TRUE, nit = -1, maxgap = I
 
     # Check if everything is right with the model
     if (dim(erg)[2] != length(mod$Z)) {
-      stop("Error with number of components $Z")
+      stop("Error with number of components $Z.")
     }
 
     # 2.3 Getting Results

@@ -41,7 +41,7 @@
 #'
 #' @author Steffen Moritz
 #' @seealso \code{\link[imputeTS]{ggplot_na_distribution}},
-#' \code{\link[imputeTS]{ggplot_na_intervals}}, 
+#' \code{\link[imputeTS]{ggplot_na_distribution2}}, 
 #' \code{\link[imputeTS]{ggplot_na_gapsize}}
 #'
 #' @examples
@@ -89,7 +89,7 @@ statsNA <- function(x, bins = 4, print_only = TRUE) {
 
   ## NA in Bins // bins_df is result data frame
 
-  # Create DF to store infomation for each bin
+  # Create DF to store information for each bin
   bins_df <- data.frame(
     start = numeric(bins), end = numeric(bins), num = numeric(bins),
     num_NA = numeric(bins), num_nonNA = numeric(bins), pct_NA = numeric(bins)

@@ -51,7 +51,7 @@ test_that("Imputation works for data.frame", {
   expect_false(anyNA(na_mean(x, option = "median")))
 })
 
-test_that("Error for wrong input for option parameter", {
+test_that("Warning for wrong input for option parameter", {
   expect_error(na_mean(tsAirgap, option = "Wrong"))
 })
 

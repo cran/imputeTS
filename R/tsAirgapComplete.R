@@ -4,7 +4,7 @@
 #' This time series provides the truth for the missing values of the \code{\link{tsAirgap}} time series. Thus it is identical
 #' to the tsAirgap time series except that no value is missing.
 #' 
-#' @details The dataset originates from Box & Jenkins (see citation) and is a commonly used example in
+#' @details The dataset originates from Box and Jenkins (see citation) and is a commonly used example in
 #' time series analysis literature.
 #' 
 #' It characteristics (strong trend, strong seasonal behavior) make it also a great 
@@ -27,6 +27,6 @@
 #' @seealso \code{\link[imputeTS]{tsHeating}}, \code{\link[imputeTS]{tsNH4}}
 #' @name tsAirgapComplete
 #' @usage tsAirgapComplete
-#' @source \cite{Box, G. E. P., Jenkins, G. M., Reinsel, G. C. and Ljung, G. M. (2015). Time series analysis: forecasting and control. Fifth Edition. John Wiley \& Sons.}
+#' @source \cite{Box, G. E. P., Jenkins, G. M., Reinsel, G. C. and Ljung, G. M. (2015). Time series analysis: forecasting and control. Fifth Edition. John Wiley and Sons.}
 #' @format Time Series (\code{\link{ts}}) with 144 rows.
 NULL

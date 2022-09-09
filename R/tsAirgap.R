@@ -4,7 +4,7 @@
 #' This time series contains missing values. In the package included is also the \code{\link{tsAirgapComplete}} time series providing the true values for the
 #' missing values.
 #' 
-#' @details The dataset originates from Box & Jenkins (see citation) and is a commonly used example in
+#' @details The dataset originates from Box and Jenkins (see citation) and is a commonly used example in
 #' time series analysis literature.
 #' 
 #' It characteristics (strong trend, strong seasonal behavior) make it also a great 
@@ -29,6 +29,6 @@
 #' @usage tsAirgap
 #' 
 #' 
-#' @source \cite{Box, G. E. P., Jenkins, G. M., Reinsel, G. C. and Ljung, G. M. (2015). Time series analysis: forecasting and control. Fifth Edition. John Wiley \& Sons.}
+#' @source \cite{Box, G. E. P., Jenkins, G. M., Reinsel, G. C. and Ljung, G. M. (2015). Time series analysis: forecasting and control. Fifth Edition. John Wiley and Sons.}
 #' @format Time Series (\code{\link{ts}}) with 144 rows including 13 NAs.
 NULL

@@ -62,7 +62,7 @@ test_that("Imputation works for data.frame", {
 
 
 
-test_that("Error for wrong input for algorithm parameter", {
+test_that("Warning for wrong input for algorithm parameter", {
   expect_error(na_seasplit(tsAirgap, algorithm = "wrong"))
 })
 

@@ -17,7 +17,7 @@
 #'    \item{"ma" - Imputation by Weighted Moving Average}
 #'    }
 #'
-#' @param find_frequency If TRUE the algorithm will try to estimate the frequency 
+#' @param find_frequency If TRUE the algorithm will try to estimate the frequency
 #' of the time-series automatically.
 #'
 #' @param maxgap Maximum number of successive NAs to still perform imputation on.
@@ -45,21 +45,22 @@
 #' @examples
 #' # Example 1: Perform seasonal splitted imputation using algorithm = "interpolation"
 #' na_seasplit(tsAirgap, algorithm = "interpolation")
-#' 
+#'
 #' # Example 2: Perform seasonal splitted imputation using algorithm = "mean"
 #' na_seasplit(tsAirgap, algorithm = "mean")
-#' 
+#'
 #' # Example 3: Same as example 1, just written with pipe operator
 #' tsAirgap %>% na_seasplit(algorithm = "interpolation")
-#' 
 #' @importFrom stats frequency ts
 #' @importFrom magrittr %>%
 #' @export
 #' @name na_seasplit
 
 na_seasplit <- function(x, algorithm = "interpolation", find_frequency = FALSE, maxgap = Inf, ...) {
-  data <- x
 
+  # Variable 'data' is used for all transformations to the time series
+  # 'x' needs to stay unchanged to be able to return the same ts class in the end
+  data <- x
 
 
   #----------------------------------------------------------
@@ -75,9 +76,15 @@ na_seasplit <- function(x, algorithm = "interpolation", find_frequency = FALSE, 
         next
       }
       # if imputing a column does not work - mostly because it is not numeric - the column is left unchanged
-      tryCatch(data[, i] <- na_seasplit(data[, i], algorithm, find_frequency, maxgap, ...), error = function(cond) {
-        warning(paste("imputeTS: No imputation performed for column", i, "because of this", cond), call. = FALSE)
-      })
+      tryCatch(
+        data[, i] <- na_seasplit(data[, i], algorithm, find_frequency, maxgap, ...),
+        error = function(cond) {
+          warning(paste(
+            "na_seasplit: No imputation performed for column", i, "of the input dataset.
+                Reason:", cond[1]
+          ), call. = FALSE)
+        }
+      )
     }
     return(data)
   }
@@ -98,7 +105,7 @@ na_seasplit <- function(x, algorithm = "interpolation", find_frequency = FALSE, 
 
     # 1.1 Check if NAs are present
     if (!anyNA(data)) {
-      return(data)
+      return(x)
     }
 
     # 1.2 special handling data types
@@ -108,7 +115,7 @@ na_seasplit <- function(x, algorithm = "interpolation", find_frequency = FALSE, 
 
     # 1.3 Check for algorithm specific minimum amount of non-NA values
     if (sum(!missindx) < 3) {
-      stop("Input data needs at least 3 non-NA data point for applying na_seasplit")
+      stop("At least 3 non-NA data points required in the time series to apply na_seasplit.")
     }
 
     # 1.4 Checks and corrections for wrong data dimension
@@ -129,9 +136,9 @@ na_seasplit <- function(x, algorithm = "interpolation", find_frequency = FALSE, 
       stop("Input x is not numeric")
     }
 
-    
+
     # 1.6 Checks and corrections for time series frequency
-    
+
     # Try to findFrequency
     if (find_frequency == TRUE) {
       t <- as.vector(data)
@@ -139,17 +146,27 @@ na_seasplit <- function(x, algorithm = "interpolation", find_frequency = FALSE, 
       if (freq > 1) {
         data <- ts(t, frequency = freq)
       }
+      else if (freq == 1) {
+        warning("Parameter find_frequency = TRUE could not detect a seasonal pattern.
+        The algorithm will go on without seasonal decomposition.
+        You might consider manually setting a frequency by creating a time series with frequency information.
+        Here is an example for weekly data: new_ts <- ts(old_ts, frequency = 7)")
+        data <- apply_base_algorithm(data, algorithm = algorithm, ...)
+        return(data)
+      }
     }
-    
+
     if (stats::frequency(data) == 1) {
-      warning("No seasonality information for dataset could be found, going on without decomposition.
-              Setting find_frequency=TRUE might be an option.")
+      warning("No seasonality information for dataset could be found,
+                going on without decomposition.
+                Setting find_frequency=TRUE might be an option.")
       data <- apply_base_algorithm(data, algorithm = algorithm, ...)
       return(data)
     }
-    
+
     if (length(data) < stats::frequency(data) * 2) {
-      warning("More than 2 complete periods needed to perform a seasonal split. The algorithm will go on without seasonal split.")
+      warning("More than 2 complete periods needed to perform a seasonal split.
+               The algorithm will go on without seasonal split.")
       data <- apply_base_algorithm(data, algorithm = algorithm, ...)
       return(data)
     }

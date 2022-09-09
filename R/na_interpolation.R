@@ -25,10 +25,30 @@
 #' @return Vector (\code{\link{vector}}) or Time Series (\code{\link{ts}})
 #'  object (dependent on given input at parameter x)
 #'
-#' @details Missing values get replaced by values of a \link{approx}, \link{spline}
+#' @details Missing values get replaced by values of \link{approx}, \link{spline}
 #' or \link[stinepack]{stinterp} interpolation.
+#' 
+#'  The na_interpolation function also supports the use of additional parameters from the respective
+#'  underlying interpolation functions. While usually not really needed, it is useful to know that 
+#'  this advanced use is in principle possible. These additional parameters are not specified explicitly 
+#'  in the na_interpolation function documentation. Take a look into the documentation of the \link[stinepack]{stinterp}, \link{approx} and \link{spline} functions to get an overview about these additional parameters.
+#'  
+#'  An example for such a parameter is the 'method' argument of spline, which can be used to
+#'  further specify the type of spline to be used. Possible values are "fmm", "natural", 
+#'  "periodic", "monoH.FC" and "hyman" (as can be seen in the \link{spline}
+#'   documentation). The respective function call using this additional parameter would  
+#'   look like this: 
+#'   \code{na_interpolation(x, option ="spline", method ="natural")}
+#'   
+#'  Like in this example other additional detail parameters (gained from \link{approx}, 
+#'  \link{spline}, \link[stinepack]{stinterp} documentation) can be used by just including 
+#'  them in the na_interpolation function call. As already mentioned, these advanced possibilities
+#'  for settings parameters are only helpful for specific use cases. For regular use
+#'  the standard parameters provided directly in the na_interpolation documentation should be
+#'  more than enough.
+#'  
 #'
-#' @author Steffen Moritz
+#' @author Steffen Moritz, Ron Hause
 #'
 #' @seealso  \code{\link[imputeTS]{na_kalman}}, \code{\link[imputeTS]{na_locf}},
 #'  \code{\link[imputeTS]{na_ma}}, \code{\link[imputeTS]{na_mean}},
@@ -38,28 +58,37 @@
 #' @examples
 #' # Prerequisite: Create Time series with missing values
 #' x <- ts(c(2, 3, 4, 5, 6, NA, 7, 8))
-#' 
+#'
 #' # Example 1: Perform linear interpolation
 #' na_interpolation(x)
-#' 
+#'
 #' # Example 2: Perform spline interpolation
 #' na_interpolation(x, option = "spline")
-#' 
+#'
 #' # Example 3: Perform stine interpolation
 #' na_interpolation(x, option = "stine")
 #' 
-#' # Example 4: Same as example 1, just written with pipe operator
-#' x %>% na_interpolation()
+#' # Example 4: Perform linear interpolation, with additional parameter pass through from spline()
+#' # Take a look at the 'Details' section of the na_interpolation documentation 
+#' # for more information about advanced parameter pass through options
+#' na_interpolation(x, option ="spline", method ="natural")
 #' 
-#' # Example 5: Same as example 2, just written with pipe operator
+#' # Example 5: Same as example 1, just written with pipe operator
+#' x %>% na_interpolation()
+#'
+#' # Example 6: Same as example 2, just written with pipe operator
 #' x %>% na_interpolation(option = "spline")
 #' @references Johannesson, Tomas, et al. (2015). "Package stinepack".
 #' @importFrom stats ts approx spline
+#' @importFrom methods hasArg
 #' @importFrom stinepack stinterp
 #' @importFrom magrittr %>%
 #' @export
 
 na_interpolation <- function(x, option = "linear", maxgap = Inf, ...) {
+
+  # Variable 'data' is used for all transformations to the time series
+  # 'x' needs to stay unchanged to be able to return the same ts class in the end
   data <- x
 
   #----------------------------------------------------------
@@ -75,13 +104,18 @@ na_interpolation <- function(x, option = "linear", maxgap = Inf, ...) {
         next
       }
       # if imputing a column does not work - mostly because it is not numeric - the column is left unchanged
-      tryCatch(data[, i] <- na_interpolation(data[, i], option, maxgap), error = function(cond) {
-        warning(paste("imputeTS: No imputation performed for column", i, "because of this", cond), call. = FALSE)
-      })
+      tryCatch(
+        data[, i] <- na_interpolation(data[, i], option, maxgap),
+        error = function(cond) {
+          warning(paste(
+            "na_interpolation: No imputation performed for column", i, "of the input dataset.
+                Reason:", cond[1]
+          ), call. = FALSE)
+        }
+      )
     }
     return(data)
   }
-
 
   #----------------------------------------------------------
   # Univariate Input
@@ -95,10 +129,9 @@ na_interpolation <- function(x, option = "linear", maxgap = Inf, ...) {
     ## 1. Input Check and Transformation
     ##
 
-
     # 1.1 Check if NAs are present
     if (!anyNA(data)) {
-      return(data)
+      return(x)
     }
 
     # 1.2 special handling data types
@@ -108,14 +141,14 @@ na_interpolation <- function(x, option = "linear", maxgap = Inf, ...) {
 
     # 1.3 Check for algorithm specific minimum amount of non-NA values
     if (sum(!missindx) < 2) {
-      stop("Input data needs at least 2 non-NA data point for applying na_interpolation")
+      stop("At least 2 non-NA data points required in the time series to apply na_interpolation.")
     }
 
     # 1.4 Checks and corrections for wrong data dimension
 
     # Check if input dimensionality is not as expected
     if (!is.null(dim(data)[2]) && !dim(data)[2] == 1) {
-      stop("Wrong input type for parameter x")
+      stop("Wrong input type for parameter x.")
     }
 
     # Altering multivariate objects with 1 column (which are essentially
@@ -126,7 +159,7 @@ na_interpolation <- function(x, option = "linear", maxgap = Inf, ...) {
 
     # 1.5 Check if input is numeric
     if (!is.numeric(data)) {
-      stop("Input x is not numeric")
+      stop("Input x is not numeric.")
     }
 
     ##
@@ -145,20 +178,31 @@ na_interpolation <- function(x, option = "linear", maxgap = Inf, ...) {
 
     data_vec <- as.vector(data)
 
+    # Linear Interpolation
     if (option == "linear") {
-      interp <- stats::approx(indx, data_vec[indx], 1:n, rule = 2, ...)$y
+      # Check if 'rule' is used in function call, to allow parameter pass through for rule
+      # Needed since parameter pass through via (...) to approx does not work, when value for 'rule' is also set in the code. 
+      if (methods::hasArg(rule)) {
+        interp <- stats::approx(indx, data_vec[indx], 1:n, ...)$y
+      }
+      else {
+        interp <- stats::approx(indx, data_vec[indx], 1:n, rule = 2, ...)$y
+      }
     }
+    # Spline Interpolation
     else if (option == "spline") {
       interp <- stats::spline(indx, data_vec[indx], n = n, ...)$y
     }
+    # Stineman Interpolation
     else if (option == "stine") {
       interp <- stinepack::stinterp(indx, data_vec[indx], 1:n, ...)$y
-      # avoid NAs at the beginning and end of series // same behavior like 
+      # avoid NAs at the beginning and end of series // same behavior like
       # for approx with rule = 2.
       if (any(is.na(interp))) {
         interp <- na_locf(interp, na_remaining = "rev")
       }
     }
+    # Wrong parameter option
     else {
       stop("Wrong parameter 'option' given. Value must be either 'linear', 'spline' or 'stine'.")
     }

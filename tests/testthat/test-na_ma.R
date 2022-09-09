@@ -65,11 +65,11 @@ test_that("Imputation works for data.frame", {
 })
 
 
-test_that("Error for wrong input for k parameter", {
+test_that("Warning for wrong input for k parameter", {
   expect_error(na_ma(tsAirgap, k = -1))
 })
 
-test_that("Error for wrong input for weighting parameter", {
+test_that("Warning for wrong input for weighting parameter", {
   expect_error(na_ma(tsAirgap, weighting = "Wrong"))
 })
 

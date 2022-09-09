@@ -8,7 +8,7 @@
 Time Series (\code{\link{ts}}) with 144 rows including 13 NAs.
 }
 \source{
-\cite{Box, G. E. P., Jenkins, G. M., Reinsel, G. C. and Ljung, G. M. (2015). Time series analysis: forecasting and control. Fifth Edition. John Wiley \& Sons.}
+\cite{Box, G. E. P., Jenkins, G. M., Reinsel, G. C. and Ljung, G. M. (2015). Time series analysis: forecasting and control. Fifth Edition. John Wiley and Sons.}
 }
 \usage{
 tsAirgap
@@ -19,7 +19,7 @@ This time series contains missing values. In the package included is also the \c
 missing values.
 }
 \details{
-The dataset originates from Box & Jenkins (see citation) and is a commonly used example in
+The dataset originates from Box and Jenkins (see citation) and is a commonly used example in
 time series analysis literature.
 
 It characteristics (strong trend, strong seasonal behavior) make it also a great

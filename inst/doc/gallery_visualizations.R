@@ -4,7 +4,7 @@ knitr::opts_chunk$set(fig.align = "center",
                       fig.height = 4,
                       dpi = 100)
 
-## ----ggplot-na-distribution, message=FALSE------------------------------------
+## ----ggplot-na-distribution-example1, message=FALSE---------------------------
 library("imputeTS")
 ggplot_na_distribution(tsAirgap)
 
@@ -25,29 +25,29 @@ df <- structure(list(date = structure(c(-21185, -20819, -20454, -20089,
 51.8, 50.0, 49.1 ), .Tsp = c(1912, 1971, 1), class = "ts")), class = "data.frame", row.names = c(NA, 
 -60L))
 
-## ----ggplot-na-distribution2--------------------------------------------------
+## ----ggplot-na-distribution-example2------------------------------------------
 ggplot_na_distribution(x = df$value, x_axis_labels = df$date)
 
-## ----ggplot-na-intervals------------------------------------------------------
-ggplot_na_intervals(tsNH4)
+## ----ggplot-na-distribution2-example1-----------------------------------------
+ggplot_na_distribution2(tsNH4)
 
-## ----ggplot-na-intervals2-----------------------------------------------------
-ggplot_na_intervals(tsNH4, measure = "count", interval_size = 144, color_missing = "gold3")
+## ----ggplot-na-distribution2-example2-----------------------------------------
+ggplot_na_distribution2(tsNH4, measure = "count", interval_size = 144, color_missing = "gold3")
 
-## ----ggplot-na-gapsize--------------------------------------------------------
+## ----ggplot-na-gapsize-example1-----------------------------------------------
 library(imputeTS)
 ggplot_na_gapsize(tsNH4)
 
-## ----ggplot-na-gapsize2-------------------------------------------------------
+## ----ggplot-na-gapsize-example2-----------------------------------------------
 library(imputeTS)
 ggplot_na_gapsize(tsNH4, include_total = F, limit = 15)
 
-## ----ggplot-na-imputations1---------------------------------------------------
+## ----ggplot-na-imputations-example1-------------------------------------------
 library(imputeTS)
 imp <- na_interpolation(tsAirgap)
 ggplot_na_imputations(tsAirgap, imp)
 
-## ----ggplot-na-imputations2---------------------------------------------------
+## ----ggplot-na-imputations-example2-------------------------------------------
 library(imputeTS)
 imp <- na_mean(tsAirgap)
 ggplot_na_imputations(x_with_na = tsAirgap, x_with_imputations = imp, x_with_truth = tsAirgapComplete )
