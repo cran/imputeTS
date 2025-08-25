@@ -1,13 +1,5 @@
-context("ggplot_na_distribution2")
+context("ggplot_na_gapsize2")
 
-
-test_that("Old functions give error", {
-  expect_error(plotNA.distributionBar(tsAirgap))
-})
-
-test_that("Old name of function gives error", {
-  expect_error(ggplot_na_intervals(tsAirgap))
-})
 
 test_that("Check that all parameters of plot  run without error", {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
@@ -16,25 +8,34 @@ test_that("Check that all parameters of plot  run without error", {
     )
   } else {
     require("ggplot2")
-    expect_true(is_ggplot(ggplot_na_distribution2(tsAirgap)))
-    expect_true(is_ggplot(ggplot_na_distribution2(tsAirgap, number_intervals = 8)))
-    expect_true(is_ggplot(ggplot_na_distribution2(tsAirgap, interval_size = 25)))
-    expect_true(is_ggplot(ggplot_na_distribution2(tsNH4, measure = "count")))
-    expect_true(is_ggplot(ggplot_na_distribution2(tsAirgap,
-      color_missing = "blue",
-      color_existing = "yellow"
-    )))
-    expect_true(is_ggplot(ggplot_na_distribution2(tsAirgap,
-      alpha_missing = 1,
-      alpha_existing = 1
-    )))
-    expect_true(is_ggplot(ggplot_na_distribution2(tsAirgap,
-      title = "Test",
-      subtitle = "test",
-      ylab = "test", xlab = "test"
-    )))
-    expect_true(is_ggplot(ggplot_na_distribution2(tsAirgap, color_border = "black")))
-    expect_true(is_ggplot(ggplot_na_distribution2(tsAirgap, theme = ggplot2::theme_classic())))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, colors_bubbles = c("#FCFBFF", "#EFEEFA", "#DDDAEF", "#C8C3E2"))))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, color_border = "red")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, alpha_bubbles = 0.1)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, labels_bubbles = "gap-occurrence")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, labels_bubbles = "gap")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, labels_bubbles = "total")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, labels_bubbles = "none")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, labels_bubbles = "occurrence")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, size_bubbles = 50)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, size_bubbles = 3)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, min_totals = 50)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, min_occurrence = 10)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, min_gap = 10)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsNH4, max_gap = 200)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, title = "test")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, subtitle = "test2")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, legend_breaks = 4)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, legend_breaks = 10)))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, legend_point_sizes = "default")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, legend_point_sizes = "actual")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, legend_point_sizes = c(1, 2, 3, 4))))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, legend_title = "Legend")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, legend_position = "left")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, ylab = "test")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, xlab = "test")))
+    expect_true(is_ggplot(ggplot_na_gapsize2(tsAirgap, theme = ggplot2::theme_classic())))
   }
 })
 
@@ -44,14 +45,35 @@ test_that("Errors for wrong input", {
     x = runif(10, 0, 10),
     y = runif(10, 0, 10)
   )
-  expect_error(ggplot_na_distribution2(x))
+  expect_error(ggplot_na_gapsize2(x))
 
   ## input not numeric
   x <- c("a", 1, NA, 3)
-  expect_error(ggplot_na_distribution2(x))
+  expect_error(ggplot_na_gapsize2(x))
+
+  ## No NA values
+  x <- 1:10
+  expect_error(ggplot_na_gapsize2(x))
+
 
   all_na <- as.numeric(c(NA, NA, NA, NA, NA, NA, NA, NA))
-  expect_error(ggplot_na_distribution2(all_na))
+  expect_error(ggplot_na_gapsize2(all_na))
+
+  ## Empty plot because of too restrictive filters
+  expect_error(ggplot_na_gapsize2(tsAirgap, min_totals = 400))
+  expect_error(ggplot_na_gapsize2(tsAirgap, max_gapsize = 0))
+  expect_error(ggplot_na_gapsize2(tsAirgap, min_occurrence = 11))
+  expect_error(ggplot_na_gapsize2(tsAirgap, max_gapsize = 0))
+
+
+
+
+  ## Wrong legend input for custom legend_point_sizes
+  expect_error(ggplot_na_gapsize2(tsAirgap, legend_point_sizes = c(1, 2)))
+
+
+  ## Wrong legend input for custom legend_point_sizes
+  expect_error(ggplot_na_gapsize2(tsAirgap, legend_point_sizes = "falsch"))
 })
 
 
@@ -79,15 +101,15 @@ test_that("Plot works with test ts", {
     ), class = "ts")
 
     expect_true(is_ggplot(
-      ggplot_na_distribution2(nh)
+      ggplot_na_gapsize2(nh)
     ))
 
     expect_true(is_ggplot(
-      ggplot_na_distribution2(nh, title = "test")
+      ggplot_na_gapsize2(nh, title = "test")
     ))
 
     expect_true(is_ggplot(
-      ggplot_na_distribution2(nh, title = "test") +
+      ggplot_na_gapsize2(nh, title = "test") +
         ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 60, hjust = 1))
     ))
   }
@@ -96,7 +118,7 @@ test_that("Plot works with test ts", {
 
 
 
-test_that(" tsNH4 data works", {
+test_that(" tsAirgap data works", {
   skip_on_cran()
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     warning("Pkg ggplot2 needed for this test.",
@@ -106,12 +128,14 @@ test_that(" tsNH4 data works", {
     require("ggplot2")
 
     expect_true(is_ggplot(
-      ggplot_na_distribution2(tsNH4)
+      ggplot_na_gapsize2(tsAirgap)
     ))
 
     expect_true(is_ggplot(
-      ggplot_na_distribution2(tsNH4) +
+      ggplot_na_gapsize2(tsAirgap) +
         ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 60, hjust = 1)) +
+        ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5)) +
+        ggplot2::theme(plot.subtitle = ggplot2::element_text(hjust = 0.5)) +
         ggplot2::ggtitle("hjsdhs")
     ))
   }
@@ -149,7 +173,7 @@ test_that("Non standard input - data.frame, tsibble, tibble, zoo", {
     tsAirgap_df <- data.frame(tsAirgap)
 
     expect_true(is_ggplot(
-      ggplot_na_distribution2(tsAirgap_df)
+      ggplot_na_gapsize2(tsAirgap_df)
     ))
 
 
@@ -158,7 +182,7 @@ test_that("Non standard input - data.frame, tsibble, tibble, zoo", {
     tsAirgap_df2 <- data.frame(tsAirgap, tsAirgap)
 
     expect_error(
-      ggplot_na_distribution2(tsAirgap_df2)
+      ggplot_na_gapsize2(tsAirgap_df2)
     )
 
 
@@ -166,7 +190,7 @@ test_that("Non standard input - data.frame, tsibble, tibble, zoo", {
     tsAirgap_zoo <- zoo::as.zoo(tsAirgap)
 
     expect_true(is_ggplot(
-      ggplot_na_distribution2(tsAirgap_zoo) + ggplot2::theme_minimal()
+      ggplot_na_gapsize2(tsAirgap_zoo) + ggplot2::theme_minimal()
     ))
 
 
@@ -175,7 +199,7 @@ test_that("Non standard input - data.frame, tsibble, tibble, zoo", {
     tsAirgap_zoo2 <- zoo(cbind(tsAirgap, tsAirgap), zoo::as.Date(zoo::as.yearmon(time(tsAirgap))))
 
     expect_error(
-      ggplot_na_distribution2(tsAirgap_zoo2)
+      ggplot_na_gapsize2(tsAirgap_zoo2)
     )
 
 
@@ -185,7 +209,7 @@ test_that("Non standard input - data.frame, tsibble, tibble, zoo", {
     tsAirgap_tsibble <- tsibble::as_tsibble(tsAirgap)
 
     expect_true(is_ggplot(
-      ggplot_na_distribution2(tsAirgap_tsibble)
+      ggplot_na_gapsize2(tsAirgap_tsibble)
     ))
 
 
@@ -195,7 +219,7 @@ test_that("Non standard input - data.frame, tsibble, tibble, zoo", {
 
 
     expect_true(is_ggplot(
-      ggplot_na_distribution2(tsAirgap_tsibble$value) + ggplot2::theme_minimal()
+      ggplot_na_gapsize2(tsAirgap_tsibble$value) + ggplot2::theme_minimal()
     ))
 
 
@@ -204,7 +228,7 @@ test_that("Non standard input - data.frame, tsibble, tibble, zoo", {
     tsAirgap_tsibble2 <- tsibble::as_tsibble(tsAirgap)
     tsAirgap_tsibble2$var2 <- tsAirgap
     expect_true(is_ggplot(
-      ggplot_na_distribution2(tsAirgap_tsibble2)
+      ggplot_na_gapsize2(tsAirgap_tsibble2)
     ))
 
 
@@ -212,7 +236,7 @@ test_that("Non standard input - data.frame, tsibble, tibble, zoo", {
     # tibble
     tsAirgap_tibble <- tibble::as_tibble(tsAirgap)
     expect_true(is_ggplot(
-      ggplot_na_distribution2(tsAirgap_tibble)
+      ggplot_na_gapsize2(tsAirgap_tibble)
     ))
 
 
@@ -220,7 +244,7 @@ test_that("Non standard input - data.frame, tsibble, tibble, zoo", {
     # tibble multivariate -  plots first variable (maybe error would be better)
     tsAirgap_tibble2 <- tibble::as_tibble(data.frame(tsAirgap, tsAirgap))
     expect_true(is_ggplot(
-      ggplot_na_distribution2(tsAirgap_tibble2)
+      ggplot_na_gapsize2(tsAirgap_tibble2)
     ))
   }
 })

@@ -1,6 +1,6 @@
 Package: imputeTS
-Version: 3.3
-Date: 2022-08-30
+Version: 3.4
+Date: 2025-08-25
 Title: Time Series Missing Value Imputation
 Description: Imputation (replacement) of missing values 
              in univariate time series. 
@@ -12,11 +12,11 @@ Description: Imputation (replacement) of missing values
             'Kalman Smoothing on Structural Time Series models',
             'Kalman Smoothing on ARIMA models'. Published in Moritz and Bartz-Beielstein (2017) 
             <doi:10.32614/RJ-2017-009>.
-Author: Steffen Moritz [aut, cre, cph]
-    (<https://orcid.org/0000-0002-0085-1804>),
+Author: Steffen Moritz [aut, cre, cph] (ORCID:
+    <https://orcid.org/0000-0002-0085-1804>),
   Sebastian Gatscha [aut],
-  Earo Wang [ctb] (<https://orcid.org/0000-0001-6448-5260>),
-  Ron Hause [ctb] (<https://orcid.org/0000-0002-5229-7366>)
+  Earo Wang [ctb] (ORCID: <https://orcid.org/0000-0001-6448-5260>),
+  Ron Hause [ctb] (ORCID: <https://orcid.org/0000-0002-5229-7366>)
 Authors@R: 
   c(
   person("Steffen", "Moritz", email="steffen.moritz10@gmail.com", role=c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-0085-1804")),
@@ -39,9 +39,9 @@ Suggests: testthat, R.rsp, knitr, zoo, timeSeries, tis, xts, tibble,
         tsibble, rmarkdown, covr
 License: GPL-3
 VignetteBuilder: R.rsp, knitr, rmarkdown
-RoxygenNote: 7.2.0
+RoxygenNote: 7.3.2
 LinkingTo: Rcpp
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2022-09-09 02:40:29 UTC; Steve
-Date/Publication: 2022-09-09 06:52:55 UTC
+Packaged: 2025-08-24 23:29:49 UTC; Steve
+Date/Publication: 2025-08-25 00:10:02 UTC
